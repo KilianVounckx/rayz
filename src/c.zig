@@ -1,49 +1,64 @@
+// ============== structs =================
+pub const Image = extern struct {
+    data: ?*anyopaque,
+    width: c_int,
+    height: c_int,
+    mipmaps: c_int,
+    format: c_int,
+};
+
+pub const Vector2 = extern struct {
+    x: f32,
+    y: f32,
+};
+
+// ============== core =================
 // Window-related functions
-extern fn InitWindow(width: c_int, height: c_int, title: [*c]const u8) void;  // Initialize window and OpenGL context
-extern fn WindowShouldClose() bool;                               // Check if KEY_ESCAPE pressed or Close icon pressed
-void CloseWindow(void);                                     // Close window and unload OpenGL context
-bool IsWindowReady(void);                                   // Check if window has been initialized successfully
-bool IsWindowFullscreen(void);                              // Check if window is currently fullscreen
-bool IsWindowHidden(void);                                  // Check if window is currently hidden (only PLATFORM_DESKTOP)
-bool IsWindowMinimized(void);                               // Check if window is currently minimized (only PLATFORM_DESKTOP)
-bool IsWindowMaximized(void);                               // Check if window is currently maximized (only PLATFORM_DESKTOP)
-bool IsWindowFocused(void);                                 // Check if window is currently focused (only PLATFORM_DESKTOP)
-bool IsWindowResized(void);                                 // Check if window has been resized last frame
-bool IsWindowState(unsigned int flag);                      // Check if one specific window flag is enabled
-void SetWindowState(unsigned int flags);                    // Set window configuration state using flags (only PLATFORM_DESKTOP)
-void ClearWindowState(unsigned int flags);                  // Clear window configuration state flags
-void ToggleFullscreen(void);                                // Toggle window state: fullscreen/windowed (only PLATFORM_DESKTOP)
-void MaximizeWindow(void);                                  // Set window state: maximized, if resizable (only PLATFORM_DESKTOP)
-void MinimizeWindow(void);                                  // Set window state: minimized, if resizable (only PLATFORM_DESKTOP)
-void RestoreWindow(void);                                   // Set window state: not minimized/maximized (only PLATFORM_DESKTOP)
-void SetWindowIcon(Image image);                            // Set icon for window (single image, RGBA 32bit, only PLATFORM_DESKTOP)
-void SetWindowIcons(Image *images, int count);              // Set icon for window (multiple images, RGBA 32bit, only PLATFORM_DESKTOP)
-void SetWindowTitle(const char *title);                     // Set title for window (only PLATFORM_DESKTOP)
-void SetWindowPosition(int x, int y);                       // Set window position on screen (only PLATFORM_DESKTOP)
-void SetWindowMonitor(int monitor);                         // Set monitor for the current window (fullscreen mode)
-void SetWindowMinSize(int width, int height);               // Set window minimum dimensions (for FLAG_WINDOW_RESIZABLE)
-void SetWindowSize(int width, int height);                  // Set window dimensions
-void SetWindowOpacity(float opacity);                       // Set window opacity [0.0f..1.0f] (only PLATFORM_DESKTOP)
-void *GetWindowHandle(void);                                // Get native window handle
-int GetScreenWidth(void);                                   // Get current screen width
-int GetScreenHeight(void);                                  // Get current screen height
-int GetRenderWidth(void);                                   // Get current render width (it considers HiDPI)
-int GetRenderHeight(void);                                  // Get current render height (it considers HiDPI)
-int GetMonitorCount(void);                                  // Get number of connected monitors
-int GetCurrentMonitor(void);                                // Get current connected monitor
-Vector2 GetMonitorPosition(int monitor);                    // Get specified monitor position
-int GetMonitorWidth(int monitor);                           // Get specified monitor width (current video mode used by monitor)
-int GetMonitorHeight(int monitor);                          // Get specified monitor height (current video mode used by monitor)
-int GetMonitorPhysicalWidth(int monitor);                   // Get specified monitor physical width in millimetres
-int GetMonitorPhysicalHeight(int monitor);                  // Get specified monitor physical height in millimetres
-int GetMonitorRefreshRate(int monitor);                     // Get specified monitor refresh rate
-Vector2 GetWindowPosition(void);                            // Get window position XY on monitor
-Vector2 GetWindowScaleDPI(void);                            // Get window scale DPI factor
-const char *GetMonitorName(int monitor);                    // Get the human-readable, UTF-8 encoded name of the primary monitor
-void SetClipboardText(const char *text);                    // Set clipboard text content
-const char *GetClipboardText(void);                         // Get clipboard text content
-void EnableEventWaiting(void);                              // Enable waiting for events on EndDrawing(), no automatic event polling
-void DisableEventWaiting(void);                             // Disable waiting for events on EndDrawing(), automatic events polling
+pub extern fn InitWindow(width: c_int, height: c_int, title: ?[*c]const u8) void;  // Initialize window and OpenGL context
+pub extern fn WindowShouldClose() bool;                                            // Check if KEY_ESCAPE pressed or Close icon pressed
+pub extern fn CloseWindow() void;                                                  // Close window and unload OpenGL context
+pub extern fn IsWindowReady() bool;                                                // Check if window has been initialized successfully
+pub extern fn IsWindowFullscreen() bool;                                           // Check if window is currently fullscreen
+pub extern fn IsWindowHidden() bool;                                               // Check if window is currently hidden (only PLATFORM_DESKTOP)
+pub extern fn IsWindowMinimized() bool;                                            // Check if window is currently minimized (only PLATFORM_DESKTOP)
+pub extern fn IsWindowMaximized() bool;                                            // Check if window is currently maximized (only PLATFORM_DESKTOP)
+pub extern fn IsWindowFocused() bool;                                              // Check if window is currently focused (only PLATFORM_DESKTOP)
+pub extern fn IsWindowResized() bool;                                              // Check if window has been resized last frame
+pub extern fn IsWindowState(flag: c_uint) bool;                                    // Check if one specific window flag is enabled
+pub extern fn SetWindowState(flags: c_uint) void;                                  // Set window configuration state using flags (only PLATFORM_DESKTOP)
+pub extern fn ClearWindowState(flags: c_uint) void;                                // Clear window configuration state flags
+pub extern fn ToggleFullscreen() void;                                             // Toggle window state: fullscreen/windowed (only PLATFORM_DESKTOP)
+pub extern fn MaximizeWindow() void;                                               // Set window state: maximized, if resizable (only PLATFORM_DESKTOP)
+pub extern fn MinimizeWindow() void;                                               // Set window state: minimized, if resizable (only PLATFORM_DESKTOP)
+pub extern fn RestoreWindow() void;                                                // Set window state: not minimized/maximized (only PLATFORM_DESKTOP)
+pub extern fn SetWindowIcon(image: Image) void;                                    // Set icon for window (single image, RGBA 32bit, only PLATFORM_DESKTOP)
+pub extern fn SetWindowIcons(images: ?[*c]Image, count: c_int) void;               // Set icon for window (multiple images, RGBA 32bit, only PLATFORM_DESKTOP)
+pub extern fn SetWindowTitle(title: ?[*c]const u8) void;                           // Set title for window (only PLATFORM_DESKTOP)
+pub extern fn SetWindowPosition(x: c_int, y: c_int) void;                          // Set window position on screen (only PLATFORM_DESKTOP)
+pub extern fn SetWindowMonitor(monitor: c_int) void;                               // Set monitor for the current window (fullscreen mode)
+pub extern fn SetWindowMinSize(width: c_int, height: c_int) void;                  // Set window minimum dimensions (for FLAG_WINDOW_RESIZABLE)
+pub extern fn SetWindowSize(width: c_int, height: c_int) void;                     // Set window dimensions
+pub extern fn SetWindowOpacity(opacity: f32) void;                                 // Set window opacity [0.0f..1.0f] (only PLATFORM_DESKTOP)
+pub extern fn GetWindowHandle() ?[*c]anyopaque;                                    // Get native window handle
+pub extern fn GetScreenWidth() c_int;                                              // Get current screen width
+pub extern fn GetScreenHeight() c_int;                                             // Get current screen height
+pub extern fn GetRenderWidth() c_int;                                              // Get current render width (it considers HiDPI)
+pub extern fn GetRenderHeight() c_int;                                             // Get current render height (it considers HiDPI)
+pub extern fn GetMonitorCount() c_int;                                             // Get number of connected monitors
+pub extern fn GetCurrentMonitor() c_int;                                           // Get current connected monitor
+pub extern fn GetMonitorPosition(monitor: c_int) Vector2;                          // Get specified monitor position
+pub extern fn GetMonitorWidth(monitor: c_int) c_int;                               // Get specified monitor width (current video mode used by monitor)
+pub extern fn GetMonitorHeight(monitor: c_int) c_int;                              // Get specified monitor height (current video mode used by monitor)
+pub extern fn GetMonitorPhysicalWidth(monitor: c_int) c_int;                       // Get specified monitor physical width in millimetres
+pub extern fn GetMonitorPhysicalHeight(monitor: c_int) c_int;                      // Get specified monitor physical height in millimetres
+pub extern fn GetMonitorRefreshRate(monitor: c_int) c_int;                         // Get specified monitor refresh rate
+pub extern fn GetWindowPosition() Vector2;                                         // Get window position XY on monitor
+pub extern fn GetWindowScaleDPI() Vector2;                                         // Get window scale DPI factor
+pub extern fn GetMonitorName(monitor: c_int) ?[*c]const u8;                        // Get the human-readable, UTF-8 encoded name of the primary monitor
+pub extern fn SetClipboardText(text: ?[*c]const u8) void;                          // Set clipboard text content
+pub extern fn GetClipboardText() ?[*c]const u8;                                    // Get clipboard text content
+pub extern fn EnableEventWaiting() void;                                           // Enable waiting for events on EndDrawing(), no automatic event polling
+pub extern fn DisableEventWaiting() void;                                          // Disable waiting for events on EndDrawing(), automatic events polling
 
 // Custom frame control functions
 // NOTE: Those functions are intended for advance users that want full control over the frame processing
