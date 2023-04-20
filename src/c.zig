@@ -69,12 +69,12 @@ pub extern fn PollInputEvents() void;                                           
 pub extern fn WaitTime(seconds: f64) void;                                         // Wait for some time (halt program execution)
 
 // Cursor-related functions
-void ShowCursor(void);                                      // Shows cursor
-void HideCursor(void);                                      // Hides cursor
-bool IsCursorHidden(void);                                  // Check if cursor is not visible
-void EnableCursor(void);                                    // Enables cursor (unlock cursor)
-void DisableCursor(void);                                   // Disables cursor (lock cursor)
-bool IsCursorOnScreen(void);                                // Check if cursor is on the screen
+pub extern fn ShowCursor() void ;                                      // Shows cursor
+pub extern fn HideCursor() void ;                                      // Hides cursor
+pub extern fn IsCursorHidden() bool ;                                  // Check if cursor is not visible
+pub extern fn EnableCursor() void ;                                    // Enables cursor (unlock cursor)
+pub extern fn DisableCursor() void ;                                   // Disables cursor (lock cursor)
+pub extern fn IsCursorOnScreen() bool;                                // Check if cursor is on the screen
 
 // Drawing-related functions
 void ClearBackground(Color color);                          // Set background color (framebuffer clear color)
