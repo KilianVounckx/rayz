@@ -64,9 +64,9 @@ pub extern fn DisableEventWaiting() void;                                       
 // NOTE: Those functions are intended for advance users that want full control over the frame processing
 // By default EndDrawing() does this job: draws everything + SwapScreenBuffer() + manage frame timing + PollInputEvents()
 // To avoid that behaviour and control frame processes manually, enable in config.h: SUPPORT_CUSTOM_FRAME_CONTROL
-void SwapScreenBuffer(void);                                // Swap back buffer with front buffer (screen drawing)
-void PollInputEvents(void);                                 // Register all input events
-void WaitTime(double seconds);                              // Wait for some time (halt program execution)
+pub extern fn SwapScreenBuffer() void;                                             // Swap back buffer with front buffer (screen drawing)
+pub extern fn PollInputEvents() void;                                              // Register all input events
+pub extern fn WaitTime(seconds: f64) void;                                         // Wait for some time (halt program execution)
 
 // Cursor-related functions
 void ShowCursor(void);                                      // Shows cursor
