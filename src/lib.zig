@@ -1,10 +1,12 @@
 const std = @import("std");
 
 pub const Color = @import("Color.zig");
+pub const Rectangle = c.raylib.structs.Rectangle;
 pub const Vector2 = c.raylib.structs.Vector2;
 pub const c = @import("c.zig");
-pub const input = @import("input.zig");
+pub const collision = @import("collision.zig");
 pub const draw = @import("draw.zig");
+pub const input = @import("input.zig");
 
 /// System/Window config flags
 /// By default all flags are set to false
@@ -73,5 +75,5 @@ pub fn clearBackground(color: Color) void {
 }
 
 test "c" {
-    std.testing.refAllDeclsRecursive(c);
+    std.testing.refAllDeclsRecursive(@This());
 }

@@ -20,6 +20,10 @@ pub fn rgb(r: u8, g: u8, b: u8) Self {
     return rgba(r, g, b, 255);
 }
 
+pub fn fade(self: Self, alpha: f32) Self {
+    return .{ .c_struct = lib.c.raylib.textures.Fade(self.c_struct, alpha) };
+}
+
 /// Light Gray
 pub const LIGHTGRAY = Self{ .c_struct = lib.c.raylib.colors.LIGHTGRAY };
 /// Gray

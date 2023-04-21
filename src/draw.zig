@@ -2,7 +2,7 @@ const lib = @import("lib.zig");
 const Color = lib.Color;
 const Vector2 = lib.Vector2;
 const Font = lib.c.raylib.structs.Font;
-const Rectangle = lib.c.raylib.structs.Rectangle;
+const Rectangle = lib.Rectangle;
 
 /// Configuration for drawText
 pub const DrawTextConfig = struct {

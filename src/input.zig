@@ -229,6 +229,7 @@ pub const KeyboardKey = enum(i32) {
     // volume_down = 25,
 };
 
+/// Check if a key is being pressed
 pub fn isKeyDown(key: KeyboardKey) bool {
     return lib.c.raylib.core.IsKeyDown(@enumToInt(key));
 }
@@ -251,14 +252,52 @@ pub const MouseButton = enum(i32) {
     back = 6,
 };
 
+/// Get mouse position XY
 pub fn getMousePosition() Vector2 {
     return lib.c.raylib.core.GetMousePosition();
 }
 
+/// Check if a mouse button has been pressed once
 pub fn isMouseButtonPressed(button: MouseButton) bool {
     return lib.c.raylib.core.IsMouseButtonPressed(@enumToInt(button));
 }
 
+/// Get mouse wheel movement for X or Y, whichever is larger
 pub fn getMouseWheelMove() f32 {
     return lib.c.raylib.core.GetMouseWheelMove();
+}
+
+pub const Gesture = enum(i32) {
+    /// No gesture
+    none = 0,
+    /// Tap gesture
+    tap = 1,
+    /// Double tap gesture
+    doubletap = 2,
+    /// Hold gesture
+    hold = 4,
+    /// Drag gesture
+    drag = 8,
+    /// Swipe right gesture
+    swipe_right = 16,
+    /// Swipe left gesture
+    swipe_left = 32,
+    /// Swipe up gesture
+    swipe_up = 64,
+    /// Swipe down gesture
+    swipe_down = 128,
+    /// Pinch in gesture
+    pinch_in = 256,
+    /// Pinch out gesture
+    pinch_out = 512,
+};
+
+/// Get latest detected gesture
+pub fn getGestureDetected() Gesture {
+    return @intToEnum(Gesture, lib.c.raylib.core.GetGestureDetected());
+}
+
+/// Get touch position XY for a touch point index (relative to screen size)
+pub fn getTouchPosition(index: i32) Vector2 {
+    return lib.c.raylib.core.GetTouchPosition(index);
 }
