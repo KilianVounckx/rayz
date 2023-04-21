@@ -1,7 +1,8 @@
 const lib = @import("lib.zig");
 const Color = lib.Color;
-const Vector2 = lib.c.raylib.structs.Vector2;
+const Vector2 = lib.Vector2;
 const Font = lib.c.raylib.structs.Font;
+const Rectangle = lib.c.raylib.structs.Rectangle;
 
 /// Configuration for drawText
 pub const DrawTextConfig = struct {
@@ -62,5 +63,28 @@ pub fn circle(center: Vector2, radius: f32, color: Color, config: DrawCircleConf
             radius,
             color.c_struct,
         );
+    }
+}
+
+pub const DrawRectangleConfig = struct {
+    fill: bool = true,
+    thickness: f32 = 1,
+    roundness: f32 = 0,
+    segments: i32 = 1,
+};
+
+pub fn rectangle(rect: Rectangle, color: Color, config: DrawRectangleConfig) void {
+    if (config.fill) {
+        if (config.roundness == 0) {
+            lib.c.raylib.shapes.DrawRectangleRec(rect, color.c_struct);
+        } else {
+            lib.c.raylib.shapes.DrawRectangleRounded(rect, config.roundness, config.segments, color.c_struct);
+        }
+    } else {
+        if (config.roundness == 0) {
+            lib.c.raylib.shapes.DrawRectangleLinesEx(rect, config.thickness, color.c_struct);
+        } else {
+            lib.c.raylib.shapes.DrawRectangleRoundedLines(rect, config.roundness, config.segments, config.thickness, color.c_struct);
+        }
     }
 }

@@ -258,3 +258,7 @@ pub fn getMousePosition() Vector2 {
 pub fn isMouseButtonPressed(button: MouseButton) bool {
     return lib.c.raylib.core.IsMouseButtonPressed(@enumToInt(button));
 }
+
+pub fn getMouseWheelMove() f32 {
+    return lib.c.raylib.core.GetMouseWheelMove();
+}

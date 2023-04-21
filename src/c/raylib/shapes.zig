@@ -68,7 +68,7 @@ pub extern fn DrawRectangleLines(posX: c_int, posY: c_int, width: c_int, height:
 /// Draw rectangle outline with extended parameters
 pub extern fn DrawRectangleLinesEx(rec: Rectangle, lineThick: f32, color: Color) void;
 /// Draw rectangle with rounded edges
-pub extern fn DrawRectangleRounded(rec: Rectangle, roundness: f32, segments: f32, color: Color) void;
+pub extern fn DrawRectangleRounded(rec: Rectangle, roundness: f32, segments: c_int, color: Color) void;
 /// Draw rectangle with rounded edges outline
 pub extern fn DrawRectangleRoundedLines(rec: Rectangle, roundness: f32, segments: c_int, lineThick: f32, color: Color) void;
 /// Draw a color-filled triangle (vertex in counter-clockwise order!)
