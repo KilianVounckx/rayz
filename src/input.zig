@@ -1,5 +1,7 @@
 const lib = @import("lib.zig");
+const Vector2 = lib.Vector2;
 
+/// Keyboard keys (US keyboard layout)
 pub const KeyboardKey = enum(i32) {
     /// Key: NULL, used for no key pressed
     none = 0,
@@ -229,4 +231,30 @@ pub const KeyboardKey = enum(i32) {
 
 pub fn isKeyDown(key: KeyboardKey) bool {
     return lib.c.raylib.core.IsKeyDown(@enumToInt(key));
+}
+
+/// Mouse buttons
+pub const MouseButton = enum(i32) {
+    /// Mouse button left
+    left = 0,
+    /// Mouse button right
+    right = 1,
+    /// Mouse button middle (pressed wheel)
+    middle = 2,
+    /// Mouse button side (advanced mouse device)
+    side = 3,
+    /// Mouse button extra (advanced mouse device)
+    extra = 4,
+    /// Mouse button forward (advanced mouse device)
+    forward = 5,
+    /// Mouse button back (advanced mouse device)
+    back = 6,
+};
+
+pub fn getMousePosition() Vector2 {
+    return lib.c.raylib.core.GetMousePosition();
+}
+
+pub fn isMouseButtonPressed(button: MouseButton) bool {
+    return lib.c.raylib.core.IsMouseButtonPressed(@enumToInt(button));
 }
