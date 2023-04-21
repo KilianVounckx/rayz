@@ -1,22 +1,22 @@
-const rl = @import("raylib").c.raylib;
-const rcore = rl.core;
-const rcolors = rl.colors;
-const rtext = rl.text;
+const rl = @import("raylib");
 
 pub fn main() !void {
     const screen_width = 800;
     const screen_height = 450;
 
-    rcore.InitWindow(screen_width, screen_height, "raylib [core] example - basic window");
-    defer rcore.CloseWindow();
+    rl.initWindow(screen_width, screen_height, "raylib [core] example - basic window", .{});
+    defer rl.closeWindow();
 
-    rcore.SetTargetFPS(60);
+    rl.setTargetFps(60);
 
-    while (!rcore.WindowShouldClose()) {
-        rcore.BeginDrawing();
-        defer rcore.EndDrawing();
+    while (!rl.windowShouldClose()) {
+        rl.beginDrawing();
+        defer rl.endDrawing();
 
-        rcore.ClearBackground(rcolors.RAYWHITE);
-        rtext.DrawText("Congrats! You created your first window!", 190, 200, 20, rcolors.LIGHTGRAY);
+        rl.clearBackground(rl.Color.RAYWHITE);
+        rl.text.drawText(
+            "Congrats! You created your first window!",
+            .{ .position = .{ .x = 190, .y = 200 }, .font_size = 20, .color = rl.Color.LIGHTGRAY },
+        );
     }
 }
