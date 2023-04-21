@@ -21,54 +21,54 @@ pub fn rgb(r: u8, g: u8, b: u8) Self {
 }
 
 /// Light Gray
-pub const LIGHTGRAY = rgba(200, 200, 200, 255);
+pub const LIGHTGRAY = Self{ .c_struct = lib.c.raylib.colors.LIGHTGRAY };
 /// Gray
-pub const GRAY = rgba(130, 130, 130, 255);
+pub const GRAY = Self{ .c_struct = lib.c.raylib.colors.GRAY };
 /// Dark Gray
-pub const DARKGRAY = rgba(80, 80, 80, 255);
+pub const DARKGRAY = Self{ .c_struct = lib.c.raylib.colors.DARKGRAY };
 /// Yellow
-pub const YELLOW = rgba(253, 249, 0, 255);
+pub const YELLOW = Self{ .c_struct = lib.c.raylib.colors.YELLOW };
 /// Gold
-pub const GOLD = rgba(255, 203, 0, 255);
+pub const GOLD = Self{ .c_struct = lib.c.raylib.colors.GOLD };
 /// Orange
-pub const ORANGE = rgba(255, 161, 0, 255);
+pub const ORANGE = Self{ .c_struct = lib.c.raylib.colors.ORANGE };
 /// Pink
-pub const PINK = rgba(255, 109, 194, 255);
+pub const PINK = Self{ .c_struct = lib.c.raylib.colors.PINK };
 /// Red
-pub const RED = rgba(230, 41, 55, 255);
+pub const RED = Self{ .c_struct = lib.c.raylib.colors.RED };
 /// Maroon
-pub const MAROON = rgba(190, 33, 55, 255);
+pub const MAROON = Self{ .c_struct = lib.c.raylib.colors.MAROON };
 /// Green
-pub const GREEN = rgba(0, 228, 48, 255);
+pub const GREEN = Self{ .c_struct = lib.c.raylib.colors.GREEN };
 /// Lime
-pub const LIME = rgba(0, 158, 47, 255);
+pub const LIME = Self{ .c_struct = lib.c.raylib.colors.LIME };
 /// Dark Green
-pub const DARKGREEN = rgba(0, 117, 44, 255);
+pub const DARKGREEN = Self{ .c_struct = lib.c.raylib.colors.DARKGREEN };
 /// Sky Blue
-pub const SKYBLUE = rgba(102, 191, 255, 255);
+pub const SKYBLUE = Self{ .c_struct = lib.c.raylib.colors.SKYBLUE };
 /// Blue
-pub const BLUE = rgba(0, 121, 241, 255);
+pub const BLUE = Self{ .c_struct = lib.c.raylib.colors.BLUE };
 /// Dark Blue
-pub const DARKBLUE = rgba(0, 82, 172, 255);
+pub const DARKBLUE = Self{ .c_struct = lib.c.raylib.colors.DARKBLUE };
 /// Purple
-pub const PURPLE = rgba(200, 122, 255, 255);
+pub const PURPLE = Self{ .c_struct = lib.c.raylib.colors.PURPLE };
 /// Violet
-pub const VIOLET = rgba(135, 60, 190, 255);
+pub const VIOLET = Self{ .c_struct = lib.c.raylib.colors.VIOLET };
 /// Dark Purple
-pub const DARKPURPLE = rgba(112, 31, 126, 255);
+pub const DARKPURPLE = Self{ .c_struct = lib.c.raylib.colors.DARKPURPLE };
 /// Beige
-pub const BEIGE = rgba(211, 176, 131, 255);
+pub const BEIGE = Self{ .c_struct = lib.c.raylib.colors.BEIGE };
 /// Brown
-pub const BROWN = rgba(127, 106, 79, 255);
+pub const BROWN = Self{ .c_struct = lib.c.raylib.colors.BROWN };
 /// Dark Brown
-pub const DARKBROWN = rgba(76, 63, 47, 255);
+pub const DARKBROWN = Self{ .c_struct = lib.c.raylib.colors.DARKBROWN };
 /// White
-pub const WHITE = rgba(255, 255, 255, 255);
+pub const WHITE = Self{ .c_struct = lib.c.raylib.colors.WHITE };
 /// Black
-pub const BLACK = rgba(0, 0, 0, 255);
+pub const BLACK = Self{ .c_struct = lib.c.raylib.colors.BLACK };
 /// Blank (Transparent)
-pub const BLANK = rgba(0, 0, 0, 0);
+pub const BLANK = Self{ .c_struct = lib.c.raylib.colors.BLANK };
 /// Magenta
-pub const MAGENTA = rgba(255, 0, 255, 255);
+pub const MAGENTA = Self{ .c_struct = lib.c.raylib.colors.MAGENTA };
 /// Raylib White (raylib logo)
-pub const RAYWHITE = rgba(245, 245, 245, 255);
+pub const RAYWHITE = Self{ .c_struct = lib.c.raylib.colors.RAYWHITE };

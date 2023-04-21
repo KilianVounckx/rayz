@@ -1,8 +1,10 @@
 const std = @import("std");
 
 pub const Color = @import("Color.zig");
+pub const Vector2 = c.raylib.structs.Vector2;
 pub const c = @import("c.zig");
-pub const text = @import("text.zig");
+pub const input = @import("input.zig");
+pub const draw = @import("draw.zig");
 
 /// System/Window config flags
 /// By default all flags are set to false

@@ -24,7 +24,7 @@ pub const DrawTextConfig = struct {
 /// Draw text (using default font)
 ///
 /// This combines DrawText, DrawTextEx, and DrawTextPro from the c api
-pub fn drawText(text: [:0]const u8, config: DrawTextConfig) void {
+pub fn text(msg: [:0]const u8, config: DrawTextConfig) void {
     const spacing = if (config.spacing) |spacing|
         spacing
     else blk: {
@@ -38,7 +38,7 @@ pub fn drawText(text: [:0]const u8, config: DrawTextConfig) void {
 
     lib.c.raylib.text.DrawTextPro(
         font,
-        text,
+        msg,
         config.position,
         config.rotation_origin,
         config.rotation_angle,
@@ -46,4 +46,21 @@ pub fn drawText(text: [:0]const u8, config: DrawTextConfig) void {
         spacing,
         config.color.c_struct,
     );
+}
+
+pub const DrawCircleConfig = struct {
+    fill: bool = true,
+};
+
+pub fn circle(center: Vector2, radius: f32, color: Color, config: DrawCircleConfig) void {
+    if (config.fill) {
+        lib.c.raylib.shapes.DrawCircleV(center, radius, color.c_struct);
+    } else {
+        lib.c.raylib.shapes.DrawCircleLines(
+            @floatToInt(i32, center.x),
+            @floatToInt(i32, center.y),
+            radius,
+            color.c_struct,
+        );
+    }
 }
