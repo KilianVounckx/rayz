@@ -1,5 +1,5 @@
 const lib = @import("../../lib.zig");
-const Color = lib.c.structs.Color;
+const Color = lib.c.raylib.structs.Color;
 
 // Custom raylib color palette for amazing visuals on WHITE background
 /// Light Gray
