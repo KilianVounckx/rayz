@@ -1,5 +1,6 @@
 const std = @import("std");
 
+pub const Camera2D = c.raylib.structs.Camera2D;
 pub const Color = @import("Color.zig");
 pub const Rectangle = c.raylib.structs.Rectangle;
 pub const Vector2 = c.raylib.structs.Vector2;
@@ -72,6 +73,14 @@ pub fn endDrawing() void {
 
 pub fn clearBackground(color: Color) void {
     c.raylib.core.ClearBackground(color.c_struct);
+}
+
+pub fn beginMode2D(camera: Camera2D) void {
+    c.raylib.core.BeginMode2D(camera);
+}
+
+pub fn endMode2D() void {
+    c.raylib.core.EndMode2D();
 }
 
 test "c" {

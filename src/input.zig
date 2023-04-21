@@ -234,6 +234,21 @@ pub fn isKeyDown(key: KeyboardKey) bool {
     return lib.c.raylib.core.IsKeyDown(@enumToInt(key));
 }
 
+/// Check if a key has been pressed once
+pub fn isKeyPressed(key: KeyboardKey) bool {
+    return lib.c.raylib.core.IsKeyPressed(@enumToInt(key));
+}
+
+/// Check if a key has been released once
+pub fn isKeyReleased(key: KeyboardKey) bool {
+    return lib.c.raylib.core.IsKeyReleased()(@enumToInt(key));
+}
+
+/// Check if a key is NOT being pressed
+pub fn isKeyUp(key: KeyboardKey) bool {
+    return lib.c.raylib.core.IsKeyUp()(@enumToInt(key));
+}
+
 /// Mouse buttons
 pub const MouseButton = enum(i32) {
     /// Mouse button left

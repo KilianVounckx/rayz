@@ -16,7 +16,7 @@ pub extern fn DrawPixel(posX: c_int, posY: c_int, color: Color) void;
 /// Draw a pixel (Vector version)
 pub extern fn DrawPixelV(position: Vector2, color: Color) void;
 /// Draw a line
-pub extern fn DrawLine(startPosX: c_int, startPosY: c_int, endPosX: c_int, endPosY: c_int, color: c_int) void;
+pub extern fn DrawLine(startPosX: c_int, startPosY: c_int, endPosX: c_int, endPosY: c_int, color: Color) void;
 /// Draw a line (Vector version)
 pub extern fn DrawLineV(startPos: Vector2, endPos: Vector2, color: Color) void;
 /// Draw a line defining thickness

@@ -88,3 +88,11 @@ pub fn rectangle(rect: Rectangle, color: Color, config: DrawRectangleConfig) voi
         }
     }
 }
+
+pub const DrawLineConfig = struct {
+    thickness: f32 = 1,
+};
+
+pub fn line(start: Vector2, end: Vector2, color: Color, config: DrawLineConfig) void {
+    lib.c.raylib.shapes.DrawLineEx(start, end, config.thickness, color.c_struct);
+}
