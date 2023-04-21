@@ -78,7 +78,9 @@ pub fn build(b: *std.Build) !void {
             });
             exe.step.dependOn(&lib.step);
 
-            exe.addModule("raylib", b.createModule(.{ .source_file = .{ .path = "src/lib.zig" } }));
+            exe.override_dest_dir = .{ .custom = "examples" };
+
+            link("raylib", b, exe);
 
             // This declares intent for the executable to be installed into the
             // standard location when the user invokes the "install" step (the default
@@ -115,4 +117,9 @@ pub fn build(b: *std.Build) !void {
             run_step.dependOn(&run_cmd.step);
         }
     }
+}
+
+pub fn link(name: []const u8, b: *std.Build, step: *std.build.CompileStep) void {
+    step.addModule(name, b.createModule(.{ .source_file = .{ .path = "src/lib.zig" } }));
+    step.linkLibrary(raylib.addRaylib(b, step.target, step.optimize));
 }
