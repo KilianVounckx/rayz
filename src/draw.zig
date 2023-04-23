@@ -1,7 +1,7 @@
 const lib = @import("lib.zig");
 const Color = lib.Color;
 const Vector2 = lib.Vector2;
-const Font = lib.c.raylib.Font;
+const Font = lib.c.Font;
 const Rectangle = lib.Rectangle;
 
 /// Configuration for drawText
@@ -17,7 +17,7 @@ pub const DrawTextConfig = struct {
     /// Spacing between letters
     spacing: ?f32 = null,
     /// Rotation point
-    rotation_origin: Vector2 = .{ .x = 0, .y = 0 },
+    rotation_origin: Vector2 = Vector2.xy(0, 0),
     /// Rotation angle
     rotation_angle: f32 = 0,
 };
@@ -35,13 +35,13 @@ pub fn text(msg: [:0]const u8, config: DrawTextConfig) void {
     const font = if (config.font) |font|
         font
     else
-        lib.c.raylib.GetFontDefault();
+        lib.c.GetFontDefault();
 
-    lib.c.raylib.DrawTextPro(
+    lib.c.DrawTextPro(
         font,
         msg,
-        config.position,
-        config.rotation_origin,
+        config.position.c_struct,
+        config.rotation_origin.c_struct,
         config.rotation_angle,
         config.font_size,
         spacing,
@@ -55,11 +55,11 @@ pub const DrawCircleConfig = struct {
 
 pub fn circle(center: Vector2, radius: f32, color: Color, config: DrawCircleConfig) void {
     if (config.fill) {
-        lib.c.raylib.DrawCircleV(center, radius, color.c_struct);
+        lib.c.DrawCircleV(center.c_struct, radius, color.c_struct);
     } else {
-        lib.c.raylib.DrawCircleLines(
-            @floatToInt(i32, center.x),
-            @floatToInt(i32, center.y),
+        lib.c.DrawCircleLines(
+            @floatToInt(i32, center.c_struct.x),
+            @floatToInt(i32, center.c_struct.y),
             radius,
             color.c_struct,
         );
@@ -76,15 +76,15 @@ pub const DrawRectangleConfig = struct {
 pub fn rectangle(rect: Rectangle, color: Color, config: DrawRectangleConfig) void {
     if (config.fill) {
         if (config.roundness == 0) {
-            lib.c.raylib.DrawRectangleRec(rect, color.c_struct);
+            lib.c.DrawRectangleRec(rect, color.c_struct);
         } else {
-            lib.c.raylib.DrawRectangleRounded(rect, config.roundness, config.segments, color.c_struct);
+            lib.c.DrawRectangleRounded(rect, config.roundness, config.segments, color.c_struct);
         }
     } else {
         if (config.roundness == 0) {
-            lib.c.raylib.DrawRectangleLinesEx(rect, config.thickness, color.c_struct);
+            lib.c.DrawRectangleLinesEx(rect, config.thickness, color.c_struct);
         } else {
-            lib.c.raylib.DrawRectangleRoundedLines(rect, config.roundness, config.segments, config.thickness, color.c_struct);
+            lib.c.DrawRectangleRoundedLines(rect, config.roundness, config.segments, config.thickness, color.c_struct);
         }
     }
 }
@@ -94,5 +94,9 @@ pub const DrawLineConfig = struct {
 };
 
 pub fn line(start: Vector2, end: Vector2, color: Color, config: DrawLineConfig) void {
-    lib.c.raylib.DrawLineEx(start, end, config.thickness, color.c_struct);
+    lib.c.DrawLineEx(start.c_struct, end.c_struct, config.thickness, color.c_struct);
+}
+
+pub fn grid(slices: i32, spacing: f32) void {
+    lib.c.DrawGrid(slices, spacing);
 }

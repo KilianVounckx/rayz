@@ -1,4 +1,4 @@
-const rl = @import("raylib").c.raylib;
+const rl = @import("raylib").c;
 const KeyboardKey = @import("raylib").input.KeyboardKey;
 
 pub fn main() void {

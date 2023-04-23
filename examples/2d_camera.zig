@@ -104,14 +104,14 @@ pub fn main() void {
                 rl.draw.rectangle(player, rl.Color.RED, .{});
 
                 rl.draw.line(
-                    .{ .x = camera.target.x, .y = -screen_height * 10 },
-                    .{ .x = camera.target.x, .y = screen_height * 10 },
+                    rl.Vector2.xy(camera.target.x, -screen_height * 10),
+                    rl.Vector2.xy(camera.target.x, screen_height * 10),
                     rl.Color.GREEN,
                     .{},
                 );
                 rl.draw.line(
-                    .{ .x = -screen_width * 10, .y = camera.target.y },
-                    .{ .x = screen_width * 10, .y = camera.target.y },
+                    rl.Vector2.xy(-screen_width * 10, camera.target.y),
+                    rl.Vector2.xy(screen_width * 10, camera.target.y),
                     rl.Color.GREEN,
                     .{},
                 );
@@ -119,7 +119,7 @@ pub fn main() void {
 
             rl.draw.text(
                 "SCREEN AREA",
-                .{ .position = .{ .x = 640, .y = 10 }, .font_size = 20, .color = rl.Color.RED },
+                .{ .position = rl.Vector2.xy(640, 10), .font_size = 20, .color = rl.Color.RED },
             );
 
             rl.draw.rectangle(.{ .x = 0, .y = 0, .width = screen_width, .height = 5 }, rl.Color.RED, .{});
@@ -130,11 +130,11 @@ pub fn main() void {
             rl.draw.rectangle(.{ .x = 10, .y = 10, .width = 250, .height = 113 }, rl.Color.SKYBLUE.fade(0.5), .{});
             rl.draw.rectangle(.{ .x = 10, .y = 10, .width = 250, .height = 113 }, rl.Color.BLUE, .{ .fill = false });
 
-            rl.draw.text("Free 2d camera controls:", .{ .position = .{ .x = 20, .y = 20 }, .font_size = 10, .color = rl.Color.BLACK });
-            rl.draw.text("- Right/Left to move Offset", .{ .position = .{ .x = 40, .y = 40 }, .font_size = 10, .color = rl.Color.DARKGRAY });
-            rl.draw.text("- Mouse Wheel to Zoom in-out", .{ .position = .{ .x = 40, .y = 60 }, .font_size = 10, .color = rl.Color.DARKGRAY });
-            rl.draw.text("- A / S to Rotate", .{ .position = .{ .x = 40, .y = 80 }, .font_size = 10, .color = rl.Color.DARKGRAY });
-            rl.draw.text("- R to reset Zoom and Rotation", .{ .position = .{ .x = 40, .y = 100 }, .font_size = 10, .color = rl.Color.DARKGRAY });
+            rl.draw.text("Free 2d camera controls:", .{ .position = rl.Vector2.xy(20, 20), .font_size = 10, .color = rl.Color.BLACK });
+            rl.draw.text("- Right/Left to move Offset", .{ .position = rl.Vector2.xy(40, 40), .font_size = 10, .color = rl.Color.DARKGRAY });
+            rl.draw.text("- Mouse Wheel to Zoom in-out", .{ .position = rl.Vector2.xy(40, 60), .font_size = 10, .color = rl.Color.DARKGRAY });
+            rl.draw.text("- A / S to Rotate", .{ .position = rl.Vector2.xy(40, 80), .font_size = 10, .color = rl.Color.DARKGRAY });
+            rl.draw.text("- R to reset Zoom and Rotation", .{ .position = rl.Vector2.xy(40, 100), .font_size = 10, .color = rl.Color.DARKGRAY });
         }
     }
 }

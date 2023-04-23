@@ -1,4 +1,4 @@
-const rl = @import("raylib").c.raylib;
+const rl = @import("raylib").c;
 const KeyboardKey = @import("raylib").input.KeyboardKey;
 
 const max_buildings = 100;

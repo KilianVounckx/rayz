@@ -11,7 +11,7 @@ pub fn main() void {
     rl.initWindow(screen_width, screen_height, "raylib [core] example - input gestures", .{});
     defer rl.closeWindow();
 
-    var touch_position = rl.Vector2{ .x = 0, .y = 0 };
+    var touch_position = rl.Vector2.xy(0, 0);
     const touch_area = rl.Rectangle{
         .x = 220,
         .y = 10,
@@ -70,7 +70,7 @@ pub fn main() void {
             rl.draw.text(
                 "GESTURES TEST AREA",
                 .{
-                    .position = .{ .x = screen_width - 270, .y = screen_height - 40 },
+                    .position = rl.Vector2.xy(screen_width - 270, screen_height - 40),
                     .font_size = 20,
                     .color = rl.Color.GRAY.fade(0.5),
                 },
@@ -84,7 +84,7 @@ pub fn main() void {
                 );
 
                 rl.draw.text(&str, .{
-                    .position = .{ .x = 35, .y = 36 + 20 * @intToFloat(f32, i) },
+                    .position = rl.Vector2.xy(35, 36 + 20 * @intToFloat(f32, i)),
                     .font_size = 10,
                     .color = if (i < gestures_count - 1) rl.Color.DARKGRAY else rl.Color.MAROON,
                 });
@@ -98,7 +98,7 @@ pub fn main() void {
             rl.draw.text(
                 "DETECTED GESTURES",
                 .{
-                    .position = .{ .x = 50, .y = 15 },
+                    .position = rl.Vector2.xy(50, 15),
                     .font_size = 10,
                     .color = rl.Color.GRAY,
                 },

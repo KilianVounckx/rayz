@@ -36,13 +36,13 @@ pub fn main() !void {
             );
             rl.draw.text(
                 "Use mouse wheel to move the cube up and down!",
-                .{ .position = .{ .x = 10, .y = 10 }, .font_size = 20, .color = rl.Color.GRAY },
+                .{ .position = rl.Vector2.xy(10, 10), .font_size = 20, .color = rl.Color.GRAY },
             );
 
             var text = try std.fmt.allocPrintZ(allocator, "Box position Y: {d:0>3}", .{box_position_y});
             defer allocator.free(text);
 
-            rl.draw.text(text, .{ .position = .{ .x = 10, .y = 40 }, .font_size = 20, .color = rl.Color.LIGHTGRAY });
+            rl.draw.text(text, .{ .position = rl.Vector2.xy(10, 40), .font_size = 20, .color = rl.Color.LIGHTGRAY });
         }
     }
 }

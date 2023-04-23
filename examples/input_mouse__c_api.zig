@@ -1,4 +1,4 @@
-const rl = @import("raylib").c.raylib;
+const rl = @import("raylib").c;
 const MouseButton = @import("raylib").input.MouseButton;
 
 pub fn main() void {

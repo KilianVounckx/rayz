@@ -233,22 +233,22 @@ pub const KeyboardKey = enum(i32) {
 
 /// Check if a key is being pressed
 pub fn isKeyDown(key: KeyboardKey) bool {
-    return lib.c.raylib.IsKeyDown(@enumToInt(key));
+    return lib.c.IsKeyDown(@enumToInt(key));
 }
 
 /// Check if a key has been pressed once
 pub fn isKeyPressed(key: KeyboardKey) bool {
-    return lib.c.raylib.IsKeyPressed(@enumToInt(key));
+    return lib.c.IsKeyPressed(@enumToInt(key));
 }
 
 /// Check if a key has been released once
 pub fn isKeyReleased(key: KeyboardKey) bool {
-    return lib.c.raylib.IsKeyReleased(@enumToInt(key));
+    return lib.c.IsKeyReleased(@enumToInt(key));
 }
 
 /// Check if a key is NOT being pressed
 pub fn isKeyUp(key: KeyboardKey) bool {
-    return lib.c.raylib.IsKeyUp(@enumToInt(key));
+    return lib.c.IsKeyUp(@enumToInt(key));
 }
 
 /// Mouse buttons
@@ -271,17 +271,27 @@ pub const MouseButton = enum(i32) {
 
 /// Get mouse position XY
 pub fn getMousePosition() Vector2 {
-    return lib.c.raylib.GetMousePosition();
+    return .{ .c_struct = lib.c.GetMousePosition() };
 }
 
 /// Check if a mouse button has been pressed once
 pub fn isMouseButtonPressed(button: MouseButton) bool {
-    return lib.c.raylib.IsMouseButtonPressed(@enumToInt(button));
+    return lib.c.IsMouseButtonPressed(@enumToInt(button));
+}
+
+/// Check if a mouse button is being pressed
+pub fn isMouseButtonDown(button: MouseButton) bool {
+    return lib.c.IsMouseButtonDown(@enumToInt(button));
 }
 
 /// Get mouse wheel movement for X or Y, whichever is larger
 pub fn getMouseWheelMove() f32 {
-    return lib.c.raylib.GetMouseWheelMove();
+    return lib.c.GetMouseWheelMove();
+}
+
+/// Get mouse delta between frames
+pub fn getMouseDelta() Vector2 {
+    return .{ .c_struct = lib.c.GetMouseDelta() };
 }
 
 pub const GestureFlags = blk: {
@@ -346,15 +356,15 @@ pub const Gesture = enum(u16) {
 };
 
 pub fn setGesturesEnabled(flags: GestureFlags) void {
-    lib.c.raylib.SetGesturesEnabled(@bitCast(u16, flags));
+    lib.c.SetGesturesEnabled(@bitCast(u16, flags));
 }
 
 /// Get latest detected gesture
 pub fn getGestureDetected() Gesture {
-    return @intToEnum(Gesture, @intCast(u16, lib.c.raylib.GetGestureDetected()));
+    return @intToEnum(Gesture, @intCast(u16, lib.c.GetGestureDetected()));
 }
 
 /// Get touch position XY for a touch point index (relative to screen size)
 pub fn getTouchPosition(index: i32) Vector2 {
-    return lib.c.raylib.GetTouchPosition(index);
+    return .{ .c_struct = lib.c.GetTouchPosition(index) };
 }

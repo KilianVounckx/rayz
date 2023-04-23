@@ -1,4 +1,4 @@
-const rl = @import("raylib").c.raylib;
+const rl = @import("raylib").c;
 const Gesture = @import("raylib").input.Gesture;
 
 const max_gesture_strings = 20;
