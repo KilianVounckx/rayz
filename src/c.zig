@@ -1,1 +1,1 @@
-pub const raylib = @import("c/raylib.zig");
+pub const raylib = @cImport(@cInclude("raylib.h"));

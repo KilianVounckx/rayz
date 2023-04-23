@@ -1,7 +1,7 @@
 const lib = @import("lib.zig");
 const Color = lib.Color;
 const Vector2 = lib.Vector2;
-const Font = lib.c.raylib.structs.Font;
+const Font = lib.c.raylib.Font;
 const Rectangle = lib.Rectangle;
 
 /// Configuration for drawText
@@ -35,9 +35,9 @@ pub fn text(msg: [:0]const u8, config: DrawTextConfig) void {
     const font = if (config.font) |font|
         font
     else
-        lib.c.raylib.text.GetFontDefault();
+        lib.c.raylib.GetFontDefault();
 
-    lib.c.raylib.text.DrawTextPro(
+    lib.c.raylib.DrawTextPro(
         font,
         msg,
         config.position,
@@ -55,9 +55,9 @@ pub const DrawCircleConfig = struct {
 
 pub fn circle(center: Vector2, radius: f32, color: Color, config: DrawCircleConfig) void {
     if (config.fill) {
-        lib.c.raylib.shapes.DrawCircleV(center, radius, color.c_struct);
+        lib.c.raylib.DrawCircleV(center, radius, color.c_struct);
     } else {
-        lib.c.raylib.shapes.DrawCircleLines(
+        lib.c.raylib.DrawCircleLines(
             @floatToInt(i32, center.x),
             @floatToInt(i32, center.y),
             radius,
@@ -76,15 +76,15 @@ pub const DrawRectangleConfig = struct {
 pub fn rectangle(rect: Rectangle, color: Color, config: DrawRectangleConfig) void {
     if (config.fill) {
         if (config.roundness == 0) {
-            lib.c.raylib.shapes.DrawRectangleRec(rect, color.c_struct);
+            lib.c.raylib.DrawRectangleRec(rect, color.c_struct);
         } else {
-            lib.c.raylib.shapes.DrawRectangleRounded(rect, config.roundness, config.segments, color.c_struct);
+            lib.c.raylib.DrawRectangleRounded(rect, config.roundness, config.segments, color.c_struct);
         }
     } else {
         if (config.roundness == 0) {
-            lib.c.raylib.shapes.DrawRectangleLinesEx(rect, config.thickness, color.c_struct);
+            lib.c.raylib.DrawRectangleLinesEx(rect, config.thickness, color.c_struct);
         } else {
-            lib.c.raylib.shapes.DrawRectangleRoundedLines(rect, config.roundness, config.segments, config.thickness, color.c_struct);
+            lib.c.raylib.DrawRectangleRoundedLines(rect, config.roundness, config.segments, config.thickness, color.c_struct);
         }
     }
 }
@@ -94,5 +94,5 @@ pub const DrawLineConfig = struct {
 };
 
 pub fn line(start: Vector2, end: Vector2, color: Color, config: DrawLineConfig) void {
-    lib.c.raylib.shapes.DrawLineEx(start, end, config.thickness, color.c_struct);
+    lib.c.raylib.DrawLineEx(start, end, config.thickness, color.c_struct);
 }

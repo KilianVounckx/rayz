@@ -25,6 +25,7 @@ pub fn build(b: *std.Build) !void {
         .target = target,
         .optimize = optimize,
     });
+    lib.addIncludePath("libs/raylib/src");
     lib.linkLibrary(raylib.addRaylib(b, target, optimize));
 
     // This declares intent for the library to be installed into the standard
@@ -122,4 +123,5 @@ pub fn build(b: *std.Build) !void {
 pub fn link(name: []const u8, b: *std.Build, step: *std.build.CompileStep) void {
     step.addModule(name, b.createModule(.{ .source_file = .{ .path = "src/lib.zig" } }));
     step.linkLibrary(raylib.addRaylib(b, step.target, step.optimize));
+    step.addIncludePath("libs/raylib/src");
 }

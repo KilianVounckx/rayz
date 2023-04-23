@@ -231,22 +231,22 @@ pub const KeyboardKey = enum(i32) {
 
 /// Check if a key is being pressed
 pub fn isKeyDown(key: KeyboardKey) bool {
-    return lib.c.raylib.core.IsKeyDown(@enumToInt(key));
+    return lib.c.raylib.IsKeyDown(@enumToInt(key));
 }
 
 /// Check if a key has been pressed once
 pub fn isKeyPressed(key: KeyboardKey) bool {
-    return lib.c.raylib.core.IsKeyPressed(@enumToInt(key));
+    return lib.c.raylib.IsKeyPressed(@enumToInt(key));
 }
 
 /// Check if a key has been released once
 pub fn isKeyReleased(key: KeyboardKey) bool {
-    return lib.c.raylib.core.IsKeyReleased()(@enumToInt(key));
+    return lib.c.raylib.IsKeyReleased()(@enumToInt(key));
 }
 
 /// Check if a key is NOT being pressed
 pub fn isKeyUp(key: KeyboardKey) bool {
-    return lib.c.raylib.core.IsKeyUp()(@enumToInt(key));
+    return lib.c.raylib.IsKeyUp()(@enumToInt(key));
 }
 
 /// Mouse buttons
@@ -269,17 +269,17 @@ pub const MouseButton = enum(i32) {
 
 /// Get mouse position XY
 pub fn getMousePosition() Vector2 {
-    return lib.c.raylib.core.GetMousePosition();
+    return lib.c.raylib.GetMousePosition();
 }
 
 /// Check if a mouse button has been pressed once
 pub fn isMouseButtonPressed(button: MouseButton) bool {
-    return lib.c.raylib.core.IsMouseButtonPressed(@enumToInt(button));
+    return lib.c.raylib.IsMouseButtonPressed(@enumToInt(button));
 }
 
 /// Get mouse wheel movement for X or Y, whichever is larger
 pub fn getMouseWheelMove() f32 {
-    return lib.c.raylib.core.GetMouseWheelMove();
+    return lib.c.raylib.GetMouseWheelMove();
 }
 
 pub const Gesture = enum(i32) {
@@ -309,10 +309,10 @@ pub const Gesture = enum(i32) {
 
 /// Get latest detected gesture
 pub fn getGestureDetected() Gesture {
-    return @intToEnum(Gesture, lib.c.raylib.core.GetGestureDetected());
+    return @intToEnum(Gesture, lib.c.raylib.GetGestureDetected());
 }
 
 /// Get touch position XY for a touch point index (relative to screen size)
 pub fn getTouchPosition(index: i32) Vector2 {
-    return lib.c.raylib.core.GetTouchPosition(index);
+    return lib.c.raylib.GetTouchPosition(index);
 }

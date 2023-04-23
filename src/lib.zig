@@ -1,9 +1,9 @@
 const std = @import("std");
 
-pub const Camera2D = c.raylib.structs.Camera2D;
+pub const Camera2D = c.raylib.Camera2D;
 pub const Color = @import("Color.zig");
-pub const Rectangle = c.raylib.structs.Rectangle;
-pub const Vector2 = c.raylib.structs.Vector2;
+pub const Rectangle = c.raylib.Rectangle;
+pub const Vector2 = c.raylib.Vector2;
 pub const c = @import("c.zig");
 pub const collision = @import("collision.zig");
 pub const draw = @import("draw.zig");
@@ -47,40 +47,40 @@ pub const ConfigFlags = packed struct(u32) {
 };
 
 pub fn initWindow(width: i32, height: i32, title: [:0]const u8, flags: ConfigFlags) void {
-    c.raylib.core.SetConfigFlags(@bitCast(u32, flags));
-    c.raylib.core.InitWindow(width, height, title);
+    c.raylib.SetConfigFlags(@bitCast(u32, flags));
+    c.raylib.InitWindow(width, height, title);
 }
 
 pub fn closeWindow() void {
-    c.raylib.core.CloseWindow();
+    c.raylib.CloseWindow();
 }
 
 pub fn setTargetFps(fps: i32) void {
-    c.raylib.core.SetTargetFPS(fps);
+    c.raylib.SetTargetFPS(fps);
 }
 
 pub fn windowShouldClose() bool {
-    return c.raylib.core.WindowShouldClose();
+    return c.raylib.WindowShouldClose();
 }
 
 pub fn beginDrawing() void {
-    c.raylib.core.BeginDrawing();
+    c.raylib.BeginDrawing();
 }
 
 pub fn endDrawing() void {
-    c.raylib.core.EndDrawing();
+    c.raylib.EndDrawing();
 }
 
 pub fn clearBackground(color: Color) void {
-    c.raylib.core.ClearBackground(color.c_struct);
+    c.raylib.ClearBackground(color.c_struct);
 }
 
 pub fn beginMode2D(camera: Camera2D) void {
-    c.raylib.core.BeginMode2D(camera);
+    c.raylib.BeginMode2D(camera);
 }
 
 pub fn endMode2D() void {
-    c.raylib.core.EndMode2D();
+    c.raylib.EndMode2D();
 }
 
 test "c" {
