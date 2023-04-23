@@ -21,8 +21,10 @@ pub fn main() void {
     var gestures_count: usize = 0;
     var gesture_strings: [max_gesture_strings][32]u8 = undefined;
 
-    var current_gesture = @enumToInt(Gesture.none);
-    var previous_gesture = @enumToInt(Gesture.none);
+    var current_gesture = @intCast(c_int, @enumToInt(Gesture.none));
+    var previous_gesture = @intCast(c_int, @enumToInt(Gesture.none));
+
+    rl.SetGesturesEnabled(0b0000000000001001); // Enable only some gestures to be detected
 
     rl.SetTargetFPS(60);
 
@@ -32,7 +34,7 @@ pub fn main() void {
             current_gesture = rl.GetGestureDetected();
             touch_position = rl.GetTouchPosition(0);
 
-            if (rl.CheckCollisionPointRec(touch_position, touch_area) and current_gesture != @enumToInt(Gesture.none)) {
+            if (rl.CheckCollisionPointRec(touch_position, touch_area) and current_gesture != @intCast(c_int, @enumToInt(Gesture.none))) {
                 if (current_gesture != previous_gesture) {
                     switch (current_gesture) {
                         @enumToInt(Gesture.tap) => {

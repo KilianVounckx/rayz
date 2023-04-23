@@ -40,6 +40,8 @@ pub fn build(b: *std.Build) !void {
         .target = target,
         .optimize = optimize,
     });
+    main_tests.addIncludePath("libs/raylib/src");
+    main_tests.linkLibrary(raylib.addRaylib(b, target, optimize));
 
     const run_main_tests = b.addRunArtifact(main_tests);
 
@@ -122,6 +124,6 @@ pub fn build(b: *std.Build) !void {
 
 pub fn link(name: []const u8, b: *std.Build, step: *std.build.CompileStep) void {
     step.addModule(name, b.createModule(.{ .source_file = .{ .path = "src/lib.zig" } }));
-    step.linkLibrary(raylib.addRaylib(b, step.target, step.optimize));
     step.addIncludePath("libs/raylib/src");
+    step.linkLibrary(raylib.addRaylib(b, step.target, step.optimize));
 }

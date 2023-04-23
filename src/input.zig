@@ -1,3 +1,5 @@
+const std = @import("std");
+
 const lib = @import("lib.zig");
 const Vector2 = lib.Vector2;
 
@@ -241,12 +243,12 @@ pub fn isKeyPressed(key: KeyboardKey) bool {
 
 /// Check if a key has been released once
 pub fn isKeyReleased(key: KeyboardKey) bool {
-    return lib.c.raylib.IsKeyReleased()(@enumToInt(key));
+    return lib.c.raylib.IsKeyReleased(@enumToInt(key));
 }
 
 /// Check if a key is NOT being pressed
 pub fn isKeyUp(key: KeyboardKey) bool {
-    return lib.c.raylib.IsKeyUp()(@enumToInt(key));
+    return lib.c.raylib.IsKeyUp(@enumToInt(key));
 }
 
 /// Mouse buttons
@@ -282,7 +284,43 @@ pub fn getMouseWheelMove() f32 {
     return lib.c.raylib.GetMouseWheelMove();
 }
 
-pub const Gesture = enum(i32) {
+pub const GestureFlags = blk: {
+    var fields: []const std.builtin.Type.StructField = &[_]std.builtin.Type.StructField{};
+    const default_field = false;
+    for (std.meta.fields(Gesture)[1..]) |field| { // Ignore none
+        fields = fields ++ &[_]std.builtin.Type.StructField{.{
+            .name = field.name,
+            .type = bool,
+            .default_value = &default_field,
+            .is_comptime = false,
+            .alignment = 0,
+        }};
+    }
+
+    const Pad = @Type(.{ .Int = .{
+        .signedness = .unsigned,
+        .bits = @typeInfo(@typeInfo(Gesture).Enum.tag_type).Int.bits - (std.meta.fields(Gesture).len - 1),
+    } });
+    const default_pad = 0;
+
+    fields = fields ++ &[_]std.builtin.Type.StructField{.{
+        .name = "_",
+        .type = Pad,
+        .default_value = &default_pad,
+        .is_comptime = false,
+        .alignment = 0,
+    }};
+
+    break :blk @Type(.{ .Struct = .{
+        .layout = .Packed,
+        .backing_integer = @typeInfo(Gesture).Enum.tag_type,
+        .fields = fields,
+        .decls = &.{},
+        .is_tuple = false,
+    } });
+};
+
+pub const Gesture = enum(u16) {
     /// No gesture
     none = 0,
     /// Tap gesture
@@ -307,9 +345,13 @@ pub const Gesture = enum(i32) {
     pinch_out = 512,
 };
 
+pub fn setGesturesEnabled(flags: GestureFlags) void {
+    lib.c.raylib.SetGesturesEnabled(@bitCast(u16, flags));
+}
+
 /// Get latest detected gesture
 pub fn getGestureDetected() Gesture {
-    return @intToEnum(Gesture, lib.c.raylib.GetGestureDetected());
+    return @intToEnum(Gesture, @intCast(u16, lib.c.raylib.GetGestureDetected()));
 }
 
 /// Get touch position XY for a touch point index (relative to screen size)

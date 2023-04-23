@@ -25,6 +25,8 @@ pub fn main() void {
     var current_gesture = rl.input.Gesture.none;
     var previous_gesture = rl.input.Gesture.none;
 
+    rl.input.setGesturesEnabled(.{ .drag = true, .tap = true, .swipe_left = true });
+
     rl.setTargetFps(60);
 
     while (!rl.windowShouldClose()) {
