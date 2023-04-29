@@ -1,8 +1,34 @@
 const lib = @import("lib.zig");
+const Camera2D = lib.Camera2D;
 const Color = lib.Color;
 const Vector2 = lib.Vector2;
 const Font = lib.c.Font;
 const Rectangle = lib.Rectangle;
+
+/// Setup canvas (framebuffer) to start drawing
+pub fn begin() void {
+    lib.c.BeginDrawing();
+}
+
+/// End canvas drawing and swap buffers (double buffering)
+pub fn end() void {
+    lib.c.EndDrawing();
+}
+
+/// Set background color (framebuffer clear color)
+pub fn clearBackground(color: Color) void {
+    lib.c.ClearBackground(color.to_c_struct());
+}
+
+/// Begin 2D mode with custom camera (2D)
+pub fn beginMode2D(camera: Camera2D) void {
+    lib.c.BeginMode2D(camera);
+}
+
+/// Ends 2D mode with custom camera
+pub fn endMode2D() void {
+    lib.c.EndMode2D();
+}
 
 /// Configuration for drawText
 pub const DrawTextConfig = struct {
@@ -93,8 +119,8 @@ pub const DrawLineConfig = struct {
     thickness: f32 = 1,
 };
 
-pub fn line(start: Vector2, end: Vector2, color: Color, config: DrawLineConfig) void {
-    lib.c.DrawLineEx(start.to_c_struct(), end.to_c_struct(), config.thickness, color.to_c_struct());
+pub fn line(start: Vector2, _end: Vector2, color: Color, config: DrawLineConfig) void {
+    lib.c.DrawLineEx(start.to_c_struct(), _end.to_c_struct(), config.thickness, color.to_c_struct());
 }
 
 pub fn grid(slices: i32, spacing: f32) void {

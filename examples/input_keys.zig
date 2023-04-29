@@ -18,10 +18,10 @@ pub fn main() void {
             if (rl.input.isKeyDown(.down)) ball_position.y += 2.0;
         }
         { // Draw
-            rl.beginDrawing();
-            defer rl.endDrawing();
+            rl.draw.begin();
+            defer rl.draw.end();
 
-            rl.clearBackground(rl.Color.RAYWHITE);
+            rl.draw.clearBackground(rl.Color.RAYWHITE);
             rl.draw.text(
                 "move the ball with arrow keys",
                 .{ .position = rl.Vector2.init(10, 10), .font_size = 20, .color = rl.Color.DARKGRAY },

@@ -58,39 +58,14 @@ pub fn closeWindow() void {
     c.CloseWindow();
 }
 
-/// Set target FPS (maximum)
-pub fn setTargetFps(fps: i32) void {
-    c.SetTargetFPS(fps);
-}
-
 /// Check if KEY_ESCAPE pressed or Close icon pressed
 pub fn windowShouldClose() bool {
     return c.WindowShouldClose();
 }
 
-/// Setup canvas (framebuffer) to start drawing
-pub fn beginDrawing() void {
-    c.BeginDrawing();
-}
-
-/// End canvas drawing and swap buffers (double buffering)
-pub fn endDrawing() void {
-    c.EndDrawing();
-}
-
-/// Set background color (framebuffer clear color)
-pub fn clearBackground(color: Color) void {
-    c.ClearBackground(color.to_c_struct());
-}
-
-/// Begin 2D mode with custom camera (2D)
-pub fn beginMode2D(camera: Camera2D) void {
-    c.BeginMode2D(camera);
-}
-
-/// Ends 2D mode with custom camera
-pub fn endMode2D() void {
-    c.EndMode2D();
+/// Set target FPS (maximum)
+pub fn setTargetFps(fps: i32) void {
+    c.SetTargetFPS(fps);
 }
 
 /// Get time in seconds for last frame drawn (delta time)

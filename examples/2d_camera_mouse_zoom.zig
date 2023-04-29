@@ -34,14 +34,14 @@ pub fn main() void {
             }
         }
         { // draw
-            rl.beginDrawing();
-            defer rl.endDrawing();
+            rl.draw.begin();
+            defer rl.draw.end();
 
-            rl.clearBackground(rl.Color.BLACK);
+            rl.draw.clearBackground(rl.Color.BLACK);
 
             {
-                rl.beginMode2D(camera);
-                defer rl.endMode2D();
+                rl.draw.beginMode2D(camera);
+                defer rl.draw.endMode2D();
 
                 {
                     rl.matrix.push();

@@ -34,10 +34,10 @@ pub fn main() void {
                 ball_color;
         }
         { // draw
-            rl.beginDrawing();
-            defer rl.endDrawing();
+            rl.draw.begin();
+            defer rl.draw.end();
 
-            rl.clearBackground(rl.Color.RAYWHITE);
+            rl.draw.clearBackground(rl.Color.RAYWHITE);
 
             rl.draw.circle(ball_position, 40, ball_color, .{});
             rl.draw.text(

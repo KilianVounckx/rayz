@@ -83,14 +83,14 @@ pub fn main() void {
             }
         }
         { // draw
-            rl.beginDrawing();
-            defer rl.endDrawing();
+            rl.draw.begin();
+            defer rl.draw.end();
 
-            rl.clearBackground(rl.Color.RAYWHITE);
+            rl.draw.clearBackground(rl.Color.RAYWHITE);
 
             {
-                rl.beginMode2D(camera);
-                defer rl.endMode2D();
+                rl.draw.beginMode2D(camera);
+                defer rl.draw.endMode2D();
 
                 rl.draw.rectangle(
                     .{ .x = -6000, .y = 320, .width = 13000, .height = 8000 },

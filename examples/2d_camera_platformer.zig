@@ -84,12 +84,12 @@ pub fn main() void {
             camera_options[camera_option].updater(&camera, player, &env_items, delta_time, screen_width, screen_height);
         }
         { // draw
-            rl.beginDrawing();
-            defer rl.endDrawing();
-            rl.clearBackground(rl.Color.LIGHTGRAY);
+            rl.draw.begin();
+            defer rl.draw.end();
+            rl.draw.clearBackground(rl.Color.LIGHTGRAY);
             {
-                rl.beginMode2D(camera);
-                defer rl.endMode2D();
+                rl.draw.beginMode2D(camera);
+                defer rl.draw.endMode2D();
 
                 for (env_items) |item| rl.draw.rectangle(item.rectangle, item.color, .{});
 

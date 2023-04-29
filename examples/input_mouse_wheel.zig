@@ -24,10 +24,10 @@ pub fn main() !void {
             box_position_y -= rl.input.getMouseWheelMove() * scroll_speed;
         }
         { // draw
-            rl.beginDrawing();
-            defer rl.endDrawing();
+            rl.draw.begin();
+            defer rl.draw.end();
 
-            rl.clearBackground(rl.Color.RAYWHITE);
+            rl.draw.clearBackground(rl.Color.RAYWHITE);
 
             rl.draw.rectangle(
                 .{ .x = screen_width / 2 - 40, .y = box_position_y, .width = 80, .height = 80 },

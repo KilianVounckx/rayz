@@ -59,10 +59,10 @@ pub fn main() void {
             }
         }
         { // draw
-            rl.beginDrawing();
-            defer rl.endDrawing();
+            rl.draw.begin();
+            defer rl.draw.end();
 
-            rl.clearBackground(rl.Color.RAYWHITE);
+            rl.draw.clearBackground(rl.Color.RAYWHITE);
 
             rl.draw.rectangle(touch_area, rl.Color.GRAY, .{});
             rl.draw.rectangle(.{ .x = 225, .y = 15, .width = screen_width - 240, .height = screen_height - 30 }, rl.Color.RAYWHITE, .{});

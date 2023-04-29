@@ -10,10 +10,10 @@ pub fn main() !void {
     rl.setTargetFps(60);
 
     while (!rl.windowShouldClose()) {
-        rl.beginDrawing();
-        defer rl.endDrawing();
+        rl.draw.begin();
+        defer rl.draw.end();
 
-        rl.clearBackground(rl.Color.RAYWHITE);
+        rl.draw.clearBackground(rl.Color.RAYWHITE);
         rl.draw.text(
             "Congrats! You created your first window!",
             .{ .position = rl.Vector2.init(190, 200), .font_size = 20, .color = rl.Color.LIGHTGRAY },
