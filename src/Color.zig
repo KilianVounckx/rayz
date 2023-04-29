@@ -1,78 +1,97 @@
 //! RGBA Color type
-//!
-//! Simple wrapper around raylib's Color type
+
+const std = @import("std");
 
 const lib = @import("lib.zig");
 
 const Self = @This();
 
-c_struct: lib.c.Color,
+r: u8 = 0,
+g: u8 = 0,
+b: u8 = 0,
+a: u8 = 255,
 
 /// Create a new rgba color
-pub fn rgba(r: u8, g: u8, b: u8, a: u8) Self {
-    return .{ .c_struct = .{ .r = r, .g = g, .b = b, .a = a } };
+pub fn init(r: u8, g: u8, b: u8, a: u8) Self {
+    return .{ .r = r, .g = g, .b = b, .a = a };
 }
 
 /// Create a new rgb color
 ///
 /// Alpha channel will be 255.
 pub fn rgb(r: u8, g: u8, b: u8) Self {
-    return rgba(r, g, b, 255);
+    return init(r, g, b, 255);
+}
+
+pub fn from_c_struct(c_struct: lib.c.Color) Self {
+    var self: Self = undefined;
+    inline for (comptime std.meta.fieldNames(Self)) |field| {
+        @field(self, field) = @field(c_struct, field);
+    }
+    return self;
+}
+
+pub fn to_c_struct(self: Self) lib.c.Color {
+    var c_struct: lib.c.Color = undefined;
+    inline for (comptime std.meta.fieldNames(Self)) |field| {
+        @field(c_struct, field) = @field(self, field);
+    }
+    return c_struct;
 }
 
 pub fn fade(self: Self, alpha: f32) Self {
-    return .{ .c_struct = lib.c.Fade(self.c_struct, alpha) };
+    return from_c_struct(lib.c.Fade(self.to_c_struct(), alpha));
 }
 
 /// Light Gray
-pub const LIGHTGRAY = Self{ .c_struct = lib.c.LIGHTGRAY };
+pub const LIGHTGRAY = from_c_struct(lib.c.LIGHTGRAY);
 /// Gray
-pub const GRAY = Self{ .c_struct = lib.c.GRAY };
+pub const GRAY = from_c_struct(lib.c.GRAY);
 /// Dark Gray
-pub const DARKGRAY = Self{ .c_struct = lib.c.DARKGRAY };
+pub const DARKGRAY = from_c_struct(lib.c.DARKGRAY);
 /// Yellow
-pub const YELLOW = Self{ .c_struct = lib.c.YELLOW };
+pub const YELLOW = from_c_struct(lib.c.YELLOW);
 /// Gold
-pub const GOLD = Self{ .c_struct = lib.c.GOLD };
+pub const GOLD = from_c_struct(lib.c.GOLD);
 /// Orange
-pub const ORANGE = Self{ .c_struct = lib.c.ORANGE };
+pub const ORANGE = from_c_struct(lib.c.ORANGE);
 /// Pink
-pub const PINK = Self{ .c_struct = lib.c.PINK };
+pub const PINK = from_c_struct(lib.c.PINK);
 /// Red
-pub const RED = Self{ .c_struct = lib.c.RED };
+pub const RED = from_c_struct(lib.c.RED);
 /// Maroon
-pub const MAROON = Self{ .c_struct = lib.c.MAROON };
+pub const MAROON = from_c_struct(lib.c.MAROON);
 /// Green
-pub const GREEN = Self{ .c_struct = lib.c.GREEN };
+pub const GREEN = from_c_struct(lib.c.GREEN);
 /// Lime
-pub const LIME = Self{ .c_struct = lib.c.LIME };
+pub const LIME = from_c_struct(lib.c.LIME);
 /// Dark Green
-pub const DARKGREEN = Self{ .c_struct = lib.c.DARKGREEN };
+pub const DARKGREEN = from_c_struct(lib.c.DARKGREEN);
 /// Sky Blue
-pub const SKYBLUE = Self{ .c_struct = lib.c.SKYBLUE };
+pub const SKYBLUE = from_c_struct(lib.c.SKYBLUE);
 /// Blue
-pub const BLUE = Self{ .c_struct = lib.c.BLUE };
+pub const BLUE = from_c_struct(lib.c.BLUE);
 /// Dark Blue
-pub const DARKBLUE = Self{ .c_struct = lib.c.DARKBLUE };
+pub const DARKBLUE = from_c_struct(lib.c.DARKBLUE);
 /// Purple
-pub const PURPLE = Self{ .c_struct = lib.c.PURPLE };
+pub const PURPLE = from_c_struct(lib.c.PURPLE);
 /// Violet
-pub const VIOLET = Self{ .c_struct = lib.c.VIOLET };
+pub const VIOLET = from_c_struct(lib.c.VIOLET);
 /// Dark Purple
-pub const DARKPURPLE = Self{ .c_struct = lib.c.DARKPURPLE };
+pub const DARKPURPLE = from_c_struct(lib.c.DARKPURPLE);
 /// Beige
-pub const BEIGE = Self{ .c_struct = lib.c.BEIGE };
+pub const BEIGE = from_c_struct(lib.c.BEIGE);
 /// Brown
-pub const BROWN = Self{ .c_struct = lib.c.BROWN };
+pub const BROWN = from_c_struct(lib.c.BROWN);
 /// Dark Brown
-pub const DARKBROWN = Self{ .c_struct = lib.c.DARKBROWN };
+pub const DARKBROWN = from_c_struct(lib.c.DARKBROWN);
 /// White
-pub const WHITE = Self{ .c_struct = lib.c.WHITE };
+pub const WHITE = from_c_struct(lib.c.WHITE);
 /// Black
-pub const BLACK = Self{ .c_struct = lib.c.BLACK };
+pub const BLACK = from_c_struct(lib.c.BLACK);
 /// Blank (Transparent)
-pub const BLANK = Self{ .c_struct = lib.c.BLANK };
+pub const BLANK = from_c_struct(lib.c.BLANK);
 /// Magenta
-pub const MAGENTA = Self{ .c_struct = lib.c.MAGENTA };
+pub const MAGENTA = from_c_struct(lib.c.MAGENTA);
 /// Raylib White (raylib logo)
-pub const RAYWHITE = Self{ .c_struct = lib.c.RAYWHITE };
+pub const RAYWHITE = from_c_struct(lib.c.RAYWHITE);

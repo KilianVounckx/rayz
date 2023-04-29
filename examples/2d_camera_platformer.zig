@@ -14,7 +14,7 @@ pub fn main() void {
     defer rl.closeWindow();
 
     var player = Player{
-        .position = rl.Vector2.xy(400, 280),
+        .position = rl.Vector2.init(400, 280),
         .speed = 0,
         .can_jump = false,
     };
@@ -28,7 +28,7 @@ pub fn main() void {
     };
 
     var camera = rl.Camera2D{
-        .target = player.position.c_struct,
+        .target = player.position.to_c_struct(),
         .offset = .{ .x = screen_width / 2, .y = screen_height / 2 },
         .rotation = 0,
         .zoom = 1,
@@ -74,7 +74,7 @@ pub fn main() void {
 
             if (rl.input.isKeyPressed(.r)) {
                 camera.zoom = 1;
-                player.position = rl.Vector2.xy(400, 280);
+                player.position = rl.Vector2.init(400, 280);
             }
 
             if (rl.input.isKeyPressed(.c)) {
@@ -94,20 +94,20 @@ pub fn main() void {
                 for (env_items) |item| rl.draw.rectangle(item.rectangle, item.color, .{});
 
                 const player_rect = rl.Rectangle{
-                    .x = player.position.x() - 20,
-                    .y = player.position.y() - 40,
+                    .x = player.position.x - 20,
+                    .y = player.position.y - 40,
                     .width = 40,
                     .height = 40,
                 };
                 rl.draw.rectangle(player_rect, rl.Color.RED, .{});
             }
-            rl.draw.text("Controls:", .{ .position = rl.Vector2.xy(20, 20), .font_size = 10, .color = rl.Color.BLACK });
-            rl.draw.text("- Left/Right to move", .{ .position = rl.Vector2.xy(40, 40), .font_size = 10, .color = rl.Color.DARKGRAY });
-            rl.draw.text("- Space to jump", .{ .position = rl.Vector2.xy(40, 60), .font_size = 10, .color = rl.Color.DARKGRAY });
-            rl.draw.text("- Mouse wheel to zoom", .{ .position = rl.Vector2.xy(40, 80), .font_size = 10, .color = rl.Color.DARKGRAY });
-            rl.draw.text("- C to change camera mode", .{ .position = rl.Vector2.xy(40, 100), .font_size = 10, .color = rl.Color.DARKGRAY });
-            rl.draw.text("Current camera mode:", .{ .position = rl.Vector2.xy(20, 120), .font_size = 10, .color = rl.Color.BLACK });
-            rl.draw.text(camera_options[camera_option].description, .{ .position = rl.Vector2.xy(40, 140), .font_size = 10, .color = rl.Color.DARKGRAY });
+            rl.draw.text("Controls:", .{ .position = rl.Vector2.init(20, 20), .font_size = 10, .color = rl.Color.BLACK });
+            rl.draw.text("- Left/Right to move", .{ .position = rl.Vector2.init(40, 40), .font_size = 10, .color = rl.Color.DARKGRAY });
+            rl.draw.text("- Space to jump", .{ .position = rl.Vector2.init(40, 60), .font_size = 10, .color = rl.Color.DARKGRAY });
+            rl.draw.text("- Mouse wheel to zoom", .{ .position = rl.Vector2.init(40, 80), .font_size = 10, .color = rl.Color.DARKGRAY });
+            rl.draw.text("- C to change camera mode", .{ .position = rl.Vector2.init(40, 100), .font_size = 10, .color = rl.Color.DARKGRAY });
+            rl.draw.text("Current camera mode:", .{ .position = rl.Vector2.init(20, 120), .font_size = 10, .color = rl.Color.BLACK });
+            rl.draw.text(camera_options[camera_option].description, .{ .position = rl.Vector2.init(40, 140), .font_size = 10, .color = rl.Color.DARKGRAY });
         }
     }
 }
@@ -123,7 +123,7 @@ fn updateCameraCenter(
     _ = delta;
     _ = env_items;
     camera.offset = .{ .x = @intToFloat(f32, screen_width) / 2, .y = @intToFloat(f32, screen_height) / 2 };
-    camera.target = player.position.c_struct;
+    camera.target = player.position.to_c_struct();
 }
 
 fn updateCameraCenterInsideMap(
@@ -135,7 +135,7 @@ fn updateCameraCenterInsideMap(
     screen_height: i32,
 ) void {
     _ = delta;
-    camera.target = player.position.c_struct;
+    camera.target = player.position.to_c_struct();
     camera.offset = .{ .x = @intToFloat(f32, screen_width) / 2, .y = @intToFloat(f32, screen_height) / 2 };
 
     var min_x: f32 = 1000;
@@ -149,20 +149,20 @@ fn updateCameraCenterInsideMap(
         max_y = std.math.max(item.rectangle.y + item.rectangle.height, max_y);
     }
 
-    const min = rl.Vector2.xy(min_x, min_y).worldToScreen2D(camera.*);
-    const max = rl.Vector2.xy(max_x, max_y).worldToScreen2D(camera.*);
+    const min = rl.Vector2.init(min_x, min_y).worldToScreen2D(camera.*);
+    const max = rl.Vector2.init(max_x, max_y).worldToScreen2D(camera.*);
 
-    if (min.x() > 0) {
-        camera.offset.x = @intToFloat(f32, screen_width) / 2 - min.x();
+    if (min.x > 0) {
+        camera.offset.x = @intToFloat(f32, screen_width) / 2 - min.x;
     }
-    if (min.y() > 0) {
-        camera.offset.y = @intToFloat(f32, screen_height) / 2 - min.x();
+    if (min.y > 0) {
+        camera.offset.y = @intToFloat(f32, screen_height) / 2 - min.x;
     }
-    if (max.x() < @intToFloat(f32, screen_width)) {
-        camera.offset.x = @intToFloat(f32, screen_width) - (max.x() - @intToFloat(f32, screen_width) / 2);
+    if (max.x < @intToFloat(f32, screen_width)) {
+        camera.offset.x = @intToFloat(f32, screen_width) - (max.x - @intToFloat(f32, screen_width) / 2);
     }
-    if (max.y() < @intToFloat(f32, screen_height)) {
-        camera.offset.y = @intToFloat(f32, screen_height) - (max.y() - @intToFloat(f32, screen_height) / 2);
+    if (max.y < @intToFloat(f32, screen_height)) {
+        camera.offset.y = @intToFloat(f32, screen_height) - (max.y - @intToFloat(f32, screen_height) / 2);
     }
 }
 
@@ -180,12 +180,12 @@ fn updateCameraCenterSmoothFollow(
     const fraction_speed = 0.8;
 
     camera.offset = .{ .x = @intToFloat(f32, screen_width) / 2, .y = @intToFloat(f32, screen_height) / 2 };
-    const diff = player.position.subtract(.{ .c_struct = camera.target });
+    const diff = player.position.subtract(rl.Vector2.from_c_struct(camera.target));
     const length = diff.length();
 
     if (length > min_effect_length) {
         const speed = std.math.max(fraction_speed * length, min_speed);
-        camera.target = (rl.Vector2{ .c_struct = camera.target }).add(diff.scale(speed * delta / length)).c_struct;
+        camera.target = rl.Vector2.from_c_struct(camera.target).add(diff.scale(speed * delta / length)).to_c_struct();
     }
 }
 
@@ -204,7 +204,7 @@ fn updateCameraEventOutOnLanding(
     };
 
     camera.offset = .{ .x = @intToFloat(f32, screen_width) / 2, .y = @intToFloat(f32, screen_height) / 2 };
-    camera.target.x = player.position.x();
+    camera.target.x = player.position.x;
 
     if (statics.even_out_target) |target| {
         if (target > camera.target.y) {
@@ -221,8 +221,8 @@ fn updateCameraEventOutOnLanding(
             }
         }
     } else {
-        if (player.can_jump and player.speed == 0 and player.position.y() != camera.target.y) {
-            statics.even_out_target = player.position.y();
+        if (player.can_jump and player.speed == 0 and player.position.y != camera.target.y) {
+            statics.even_out_target = player.position.y;
         }
     }
 }
@@ -237,33 +237,33 @@ fn updateCameraPlayerBoundsPush(
 ) void {
     _ = delta;
     _ = env_items;
-    const bounding_box = rl.Vector2.xy(0.2, 0.2);
+    const bounding_box = rl.Vector2.init(0.2, 0.2);
 
-    const bounding_box_world_min = rl.Vector2.xy(
-        (1 - bounding_box.x()) * 0.5 * @intToFloat(f32, screen_width),
-        (1 - bounding_box.y()) * 0.5 * @intToFloat(f32, screen_height),
+    const bounding_box_world_min = rl.Vector2.init(
+        (1 - bounding_box.x) * 0.5 * @intToFloat(f32, screen_width),
+        (1 - bounding_box.y) * 0.5 * @intToFloat(f32, screen_height),
     ).screenToWorld2D(camera.*);
-    const bounding_box_world_max = rl.Vector2.xy(
-        (1 + bounding_box.x()) * 0.5 * @intToFloat(f32, screen_width),
-        (1 + bounding_box.y()) * 0.5 * @intToFloat(f32, screen_height),
+    const bounding_box_world_max = rl.Vector2.init(
+        (1 + bounding_box.x) * 0.5 * @intToFloat(f32, screen_width),
+        (1 + bounding_box.y) * 0.5 * @intToFloat(f32, screen_height),
     ).screenToWorld2D(camera.*);
 
     camera.offset = .{
-        .x = (1 - bounding_box.x()) * 0.5 * @intToFloat(f32, screen_width),
-        .y = (1 - bounding_box.y()) * 0.5 * @intToFloat(f32, screen_height),
+        .x = (1 - bounding_box.x) * 0.5 * @intToFloat(f32, screen_width),
+        .y = (1 - bounding_box.y) * 0.5 * @intToFloat(f32, screen_height),
     };
 
-    if (player.position.x() < bounding_box_world_min.x()) {
-        camera.target.x = player.position.x();
+    if (player.position.x < bounding_box_world_min.x) {
+        camera.target.x = player.position.x;
     }
-    if (player.position.y() < bounding_box_world_min.y()) {
-        camera.target.y = player.position.y();
+    if (player.position.y < bounding_box_world_min.y) {
+        camera.target.y = player.position.y;
     }
-    if (player.position.x() > bounding_box_world_max.x()) {
-        camera.target.x = bounding_box_world_min.x() + (player.position.x() - bounding_box_world_max.x());
+    if (player.position.x > bounding_box_world_max.x) {
+        camera.target.x = bounding_box_world_min.x + (player.position.x - bounding_box_world_max.x);
     }
-    if (player.position.y() > bounding_box_world_max.y()) {
-        camera.target.y = bounding_box_world_min.y() + (player.position.y() - bounding_box_world_max.y());
+    if (player.position.y > bounding_box_world_max.y) {
+        camera.target.y = bounding_box_world_min.y + (player.position.y - bounding_box_world_max.y);
     }
 }
 
@@ -274,10 +274,10 @@ const Player = struct {
 
     fn update(player: *Player, env_items: []const EnvItem, delta: f32) void {
         if (rl.input.isKeyDown(.left)) {
-            player.position.c_struct.x -= player_horizontal_speed * delta;
+            player.position.x -= player_horizontal_speed * delta;
         }
         if (rl.input.isKeyDown(.right)) {
-            player.position.c_struct.x += player_horizontal_speed * delta;
+            player.position.x += player_horizontal_speed * delta;
         }
         if (rl.input.isKeyDown(.space) and player.can_jump) {
             player.speed = -player_jump_speed;
@@ -288,18 +288,18 @@ const Player = struct {
         for (env_items) |item| {
             const position = player.position;
             if (item.blocking and
-                item.rectangle.x <= position.x() and
-                item.rectangle.x + item.rectangle.width >= position.x() and
-                item.rectangle.y >= position.y() and
-                item.rectangle.y <= position.y() + player.speed * delta)
+                item.rectangle.x <= position.x and
+                item.rectangle.x + item.rectangle.width >= position.x and
+                item.rectangle.y >= position.y and
+                item.rectangle.y <= position.y + player.speed * delta)
             {
                 hit_obstacle = true;
-                player.position.c_struct.y = item.rectangle.y;
+                player.position.y = item.rectangle.y;
             }
         }
 
         if (!hit_obstacle) {
-            player.position.c_struct.y += player.speed * delta;
+            player.position.y += player.speed * delta;
             player.speed += gravity * delta;
             player.can_jump = false;
         } else {

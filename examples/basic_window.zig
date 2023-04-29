@@ -16,7 +16,7 @@ pub fn main() !void {
         rl.clearBackground(rl.Color.RAYWHITE);
         rl.draw.text(
             "Congrats! You created your first window!",
-            .{ .position = rl.Vector2.xy(190, 200), .font_size = 20, .color = rl.Color.LIGHTGRAY },
+            .{ .position = rl.Vector2.init(190, 200), .font_size = 20, .color = rl.Color.LIGHTGRAY },
         );
     }
 }

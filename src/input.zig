@@ -271,7 +271,7 @@ pub const MouseButton = enum(i32) {
 
 /// Get mouse position XY
 pub fn getMousePosition() Vector2 {
-    return .{ .c_struct = lib.c.GetMousePosition() };
+    return Vector2.from_c_struct(lib.c.GetMousePosition());
 }
 
 /// Check if a mouse button has been pressed once
@@ -291,7 +291,7 @@ pub fn getMouseWheelMove() f32 {
 
 /// Get mouse delta between frames
 pub fn getMouseDelta() Vector2 {
-    return .{ .c_struct = lib.c.GetMouseDelta() };
+    return Vector2.from_c_struct(lib.c.GetMouseDelta());
 }
 
 pub const GestureFlags = blk: {
@@ -366,5 +366,5 @@ pub fn getGestureDetected() Gesture {
 
 /// Get touch position XY for a touch point index (relative to screen size)
 pub fn getTouchPosition(index: i32) Vector2 {
-    return .{ .c_struct = lib.c.GetTouchPosition(index) };
+    return Vector2.from_c_struct(lib.c.GetTouchPosition(index));
 }

@@ -1,46 +1,55 @@
 //! Vector2, 2 components
-//!
-//! Simple wrapper around raylib's Color type
+
+const std = @import("std");
 
 const lib = @import("lib.zig");
 const Camera2D = lib.Camera2D;
 
 const Self = @This();
 
-c_struct: lib.c.Vector2,
+x: f32 = 0,
+y: f32 = 0,
 
-pub fn xy(_x: f32, _y: f32) Self {
-    return .{ .c_struct = .{ .x = _x, .y = _y } };
+pub fn init(x: f32, y: f32) Self {
+    return .{ .x = x, .y = y };
 }
 
-pub fn x(self: Self) f32 {
-    return self.c_struct.x;
+pub fn from_c_struct(c_struct: lib.c.Vector2) Self {
+    var self: Self = undefined;
+    inline for (comptime std.meta.fieldNames(Self)) |field| {
+        @field(self, field) = @field(c_struct, field);
+    }
+    return self;
 }
 
-pub fn y(self: Self) f32 {
-    return self.c_struct.y;
+pub fn to_c_struct(self: Self) lib.c.Vector2 {
+    var c_struct: lib.c.Vector2 = undefined;
+    inline for (comptime std.meta.fieldNames(Self)) |field| {
+        @field(c_struct, field) = @field(self, field);
+    }
+    return c_struct;
 }
 
 pub fn add(self: Self, other: Self) Self {
-    return .{ .c_struct = lib.c.Vector2Add(self.c_struct, other.c_struct) };
+    return from_c_struct(lib.c.Vector2Add(self.to_c_struct(), other.to_c_struct()));
 }
 
 pub fn subtract(self: Self, other: Self) Self {
-    return .{ .c_struct = lib.c.Vector2Subtract(self.c_struct, other.c_struct) };
+    return from_c_struct(lib.c.Vector2Subtract(self.to_c_struct(), other.to_c_struct()));
 }
 
 pub fn scale(self: Self, factor: f32) Self {
-    return .{ .c_struct = lib.c.Vector2Scale(self.c_struct, factor) };
+    return from_c_struct(lib.c.Vector2Scale(self.to_c_struct(), factor));
 }
 
 pub fn length(self: Self) f32 {
-    return lib.c.Vector2Length(self.c_struct);
+    return lib.c.Vector2Length(self.to_c_struct());
 }
 
 pub fn screenToWorld2D(self: Self, camera: Camera2D) Self {
-    return .{ .c_struct = lib.c.GetScreenToWorld2D(self.c_struct, camera) };
+    return from_c_struct(lib.c.GetScreenToWorld2D(self.to_c_struct(), camera));
 }
 
 pub fn worldToScreen2D(self: Self, camera: Camera2D) Self {
-    return .{ .c_struct = lib.c.GetWorldToScreen2D(self.c_struct, camera) };
+    return from_c_struct(lib.c.GetWorldToScreen2D(self.to_c_struct(), camera));
 }

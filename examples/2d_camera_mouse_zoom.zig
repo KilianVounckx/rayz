@@ -16,14 +16,14 @@ pub fn main() void {
         { // update
             if (rl.input.isMouseButtonDown(.right)) {
                 var delta = rl.input.getMouseDelta().scale(-1 / camera.zoom);
-                camera.target = (rl.Vector2{ .c_struct = camera.target }).add(delta).c_struct;
+                camera.target = rl.Vector2.from_c_struct(camera.target).add(delta).to_c_struct();
             }
 
             const wheel = rl.input.getMouseWheelMove();
             if (wheel != 0) {
-                camera.offset = rl.input.getMousePosition().c_struct;
-                const mouse_world_pos = (rl.Vector2{ .c_struct = camera.offset }).screenToWorld2D(camera);
-                camera.target = mouse_world_pos.c_struct;
+                camera.offset = rl.input.getMousePosition().to_c_struct();
+                const mouse_world_pos = rl.Vector2.from_c_struct(camera.offset).screenToWorld2D(camera);
+                camera.target = mouse_world_pos.to_c_struct();
 
                 const zoom_increment = 0.125;
                 camera.zoom += wheel * zoom_increment;
@@ -52,12 +52,12 @@ pub fn main() void {
                     rl.draw.grid(100, 50);
                 }
 
-                rl.draw.circle(rl.Vector2.xy(100, 100), 50, rl.Color.YELLOW, .{});
+                rl.draw.circle(rl.Vector2.init(100, 100), 50, rl.Color.YELLOW, .{});
             }
 
             rl.draw.text(
                 "Mouse right button drag to move, mouse wheel to zoom",
-                .{ .position = rl.Vector2.xy(10, 10), .font_size = 20, .color = rl.Color.WHITE },
+                .{ .position = rl.Vector2.init(10, 10), .font_size = 20, .color = rl.Color.WHITE },
             );
         }
     }

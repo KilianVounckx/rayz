@@ -80,7 +80,7 @@ pub fn endDrawing() void {
 
 /// Set background color (framebuffer clear color)
 pub fn clearBackground(color: Color) void {
-    c.ClearBackground(color.c_struct);
+    c.ClearBackground(color.to_c_struct());
 }
 
 /// Begin 2D mode with custom camera (2D)

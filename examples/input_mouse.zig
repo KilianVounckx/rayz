@@ -7,7 +7,7 @@ pub fn main() void {
     rl.initWindow(screen_width, screen_height, "raylib [core] example - mouse input", .{});
     defer rl.closeWindow();
 
-    var ball_position = rl.Vector2.xy(-100, 100);
+    var ball_position = rl.Vector2.init(-100, 100);
     var ball_color = rl.Color.DARKBLUE;
 
     rl.setTargetFps(60);
@@ -43,7 +43,7 @@ pub fn main() void {
             rl.draw.text(
                 "move ball with mouse and click mouse button to change color",
                 .{
-                    .position = rl.Vector2.xy(10, 10),
+                    .position = rl.Vector2.init(10, 10),
                     .font_size = 20,
                     .color = rl.Color.DARKGRAY,
                 },
