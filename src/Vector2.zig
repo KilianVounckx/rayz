@@ -25,10 +25,22 @@ pub fn add(self: Self, other: Self) Self {
     return .{ .c_struct = lib.c.Vector2Add(self.c_struct, other.c_struct) };
 }
 
+pub fn subtract(self: Self, other: Self) Self {
+    return .{ .c_struct = lib.c.Vector2Subtract(self.c_struct, other.c_struct) };
+}
+
 pub fn scale(self: Self, factor: f32) Self {
     return .{ .c_struct = lib.c.Vector2Scale(self.c_struct, factor) };
 }
 
+pub fn length(self: Self) f32 {
+    return lib.c.Vector2Length(self.c_struct);
+}
+
 pub fn screenToWorld2D(self: Self, camera: Camera2D) Self {
     return .{ .c_struct = lib.c.GetScreenToWorld2D(self.c_struct, camera) };
+}
+
+pub fn worldToScreen2D(self: Self, camera: Camera2D) Self {
+    return .{ .c_struct = lib.c.GetWorldToScreen2D(self.c_struct, camera) };
 }
