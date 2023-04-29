@@ -50,7 +50,7 @@ pub const ConfigFlags = packed struct(u32) {
 };
 
 /// Initialize window and OpenGL context
-pub fn initWindow(width: i32, height: i32, title: [:0]const u8, flags: ConfigFlags) void {
+pub fn initWindow(width: u16, height: u16, title: [:0]const u8, flags: ConfigFlags) void {
     c.SetConfigFlags(@bitCast(u32, flags));
     c.InitWindow(width, height, title);
 }
