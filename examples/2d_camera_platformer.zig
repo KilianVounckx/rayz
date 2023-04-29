@@ -35,7 +35,7 @@ pub fn main() void {
     };
 
     const camera_options = [_]struct {
-        updater: *const fn (*rl.Camera2D, Player, []const EnvItem, f32, i32, i32) void,
+        updater: *const fn (*rl.Camera2D, Player, []const EnvItem, f32, u16, u16) void,
         description: [:0]const u8,
     }{
         .{
@@ -117,8 +117,8 @@ fn updateCameraCenter(
     player: Player,
     env_items: []const EnvItem,
     delta: f32,
-    screen_width: i32,
-    screen_height: i32,
+    screen_width: u16,
+    screen_height: u16,
 ) void {
     _ = delta;
     _ = env_items;
@@ -131,8 +131,8 @@ fn updateCameraCenterInsideMap(
     player: Player,
     env_items: []const EnvItem,
     delta: f32,
-    screen_width: i32,
-    screen_height: i32,
+    screen_width: u16,
+    screen_height: u16,
 ) void {
     _ = delta;
     camera.target = player.position.to_c_struct();
@@ -171,8 +171,8 @@ fn updateCameraCenterSmoothFollow(
     player: Player,
     env_items: []const EnvItem,
     delta: f32,
-    screen_width: i32,
-    screen_height: i32,
+    screen_width: u16,
+    screen_height: u16,
 ) void {
     _ = env_items;
     const min_speed = 30;
@@ -194,8 +194,8 @@ fn updateCameraEventOutOnLanding(
     player: Player,
     env_items: []const EnvItem,
     delta: f32,
-    screen_width: i32,
-    screen_height: i32,
+    screen_width: u16,
+    screen_height: u16,
 ) void {
     _ = env_items;
     const statics = struct {
@@ -232,8 +232,8 @@ fn updateCameraPlayerBoundsPush(
     player: Player,
     env_items: []const EnvItem,
     delta: f32,
-    screen_width: i32,
-    screen_height: i32,
+    screen_width: u16,
+    screen_height: u16,
 ) void {
     _ = delta;
     _ = env_items;
