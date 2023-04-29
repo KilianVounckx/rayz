@@ -5,6 +5,7 @@ const Color = lib.Color;
 const Vector2 = lib.Vector2;
 const Vector3 = lib.Vector3;
 const Font = lib.c.Font;
+const Ray = lib.Ray;
 const Rectangle = lib.Rectangle;
 
 /// Setup canvas (framebuffer) to start drawing
@@ -84,6 +85,32 @@ pub fn text(msg: [:0]const u8, config: DrawTextConfig) void {
         spacing,
         config.color.to_c_struct(),
     );
+}
+
+/// Configuration for `measureText`
+pub const MeasureTextConfig = struct {
+    /// Font
+    font: ?Font = null,
+    /// Font size
+    font_size: f32,
+    /// Spacing between letters
+    spacing: ?f32 = null,
+};
+
+/// Measure string width for default font
+pub fn measureText(msg: [:0]const u8, config: MeasureTextConfig) Vector2 {
+    const spacing = if (config.spacing) |spacing|
+        spacing
+    else blk: {
+        const default_font_size = 10;
+        break :blk config.font_size / default_font_size;
+    };
+    const font = if (config.font) |font|
+        font
+    else
+        lib.c.GetFontDefault();
+
+    return Vector2.from_c_struct(lib.c.MeasureTextEx(font, msg, config.font_size, spacing));
 }
 
 /// Configuration for `circle`
@@ -195,4 +222,11 @@ pub fn cube(position: Vector3, size: Vector3, color: Color, config: DrawCubeConf
 /// Wrapper around `DrawPlane` from the c api
 pub fn plane(center_position: Vector3, size: Vector2, color: Color) void {
     lib.c.DrawPlane(center_position.to_c_struct(), size.to_c_struct(), color.to_c_struct());
+}
+
+/// Draw ray
+///
+/// Wrapper around `DrawRay` from the c api
+pub fn ray(_ray: Ray, color: Color) void {
+    lib.c.DrawRay(_ray.to_c_struct(), color.to_c_struct());
 }

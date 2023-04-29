@@ -42,6 +42,11 @@ pub fn add(self: Self, other: Self) Self {
     return from_c_struct(lib.c.Vector3Add(self.to_c_struct(), other.to_c_struct()));
 }
 
+/// Add vector and float value
+pub fn addValue(self: Self, value: f32) Self {
+    return from_c_struct(lib.c.Vector3AddValue(self.to_c_struct(), value));
+}
+
 /// Subtract two vectors (v1 - v2)
 pub fn subtract(self: Self, other: Self) Self {
     return from_c_struct(lib.c.Vector3Subtract(self.to_c_struct(), other.to_c_struct()));

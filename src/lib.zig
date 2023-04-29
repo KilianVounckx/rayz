@@ -1,8 +1,10 @@
 const std = @import("std");
 
+pub const BoundingBox = c.BoundingBox;
 pub const Camera2D = c.Camera2D;
 pub const Camera3D = @import("Camera3D.zig");
 pub const Color = @import("Color.zig");
+pub const Ray = @import("Ray.zig");
 pub const Rectangle = c.Rectangle;
 pub const Vector2 = @import("Vector2.zig");
 pub const Vector3 = @import("Vector3.zig");
@@ -82,7 +84,12 @@ pub fn disableCursor() void {
 
 /// Enables cursor (unlock cursor)
 pub fn enableCursor() void {
-    c.enableCursor();
+    c.EnableCursor();
+}
+
+/// Check if cursor is not visible
+pub fn isCursorHidden() bool {
+    return c.IsCursorHidden();
 }
 
 test "c" {

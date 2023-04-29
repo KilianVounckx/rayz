@@ -3,6 +3,8 @@
 const std = @import("std");
 
 const lib = @import("lib.zig");
+const Ray = lib.Ray;
+const Vector2 = lib.Vector2;
 const Vector3 = lib.Vector3;
 
 const Self = @This();
@@ -87,6 +89,11 @@ pub fn roll(self: *Self, angle_radians: f32) void {
     var c_struct = self.to_c_struct();
     lib.c.CameraRoll(&c_struct, angle_radians);
     self.* = from_c_struct(c_struct);
+}
+
+/// Get a ray trace from mouse position
+pub fn getMouseRay(self: Self, mouse_position: Vector2) Ray {
+    return Ray.from_c_struct(lib.c.GetMouseRay(mouse_position.to_c_struct(), self.to_c_struct()));
 }
 
 /// Camera projection
