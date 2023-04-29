@@ -17,24 +17,24 @@ pub fn init(position: Vector3, direction: Vector3) Self {
 }
 
 /// Convert a c api Ray to a zig Ray
-pub fn from_c_struct(c_struct: lib.c.Ray) Self {
+pub fn fromCStruct(c_struct: lib.c.Ray) Self {
     return .{
-        .position = Vector3.from_c_struct(c_struct.position),
-        .direction = Vector3.from_c_struct(c_struct.direction),
+        .position = Vector3.fromCStruct(c_struct.position),
+        .direction = Vector3.fromCStruct(c_struct.direction),
     };
 }
 
 /// Convert a zig Ray to a c api Ray
-pub fn to_c_struct(self: Self) lib.c.Ray {
+pub fn toCStruct(self: Self) lib.c.Ray {
     return .{
-        .position = self.position.to_c_struct(),
-        .direction = self.direction.to_c_struct(),
+        .position = self.position.toCStruct(),
+        .direction = self.direction.toCStruct(),
     };
 }
 
 /// Get collision info between ray and box
 pub fn getCollisionBox(self: Self, box: BoundingBox) ?Collision {
-    return Collision.from_c_struct(lib.c.GetRayCollisionBox(self.to_c_struct(), box));
+    return Collision.from_c_struct(lib.c.GetRayCollisionBox(self.toCStruct(), box));
 }
 
 // RayCollision, ray hit information
@@ -51,8 +51,8 @@ pub const Collision = struct {
         if (!c_struct.hit) return null;
         return .{
             .distance = c_struct.distance,
-            .point = Vector3.from_c_struct(c_struct.point),
-            .normal = Vector3.from_c_struct(c_struct.normal),
+            .point = Vector3.fromCStruct(c_struct.point),
+            .normal = Vector3.fromCStruct(c_struct.normal),
         };
     }
 
@@ -67,8 +67,8 @@ pub const Collision = struct {
         return .{
             .hit = true,
             .distance = collision.distance,
-            .point = collision.point.to_c_struct(),
-            .normal = collision.normal.to_c_struct(),
+            .point = collision.point.toCStruct(),
+            .normal = collision.normal.toCStruct(),
         };
     }
 };

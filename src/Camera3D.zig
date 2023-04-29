@@ -21,22 +21,22 @@ fovy: f32,
 projection: Projection,
 
 /// Convert a c api Camera3D to a zig Camera3D
-pub fn from_c_struct(c_struct: lib.c.Camera3D) Self {
+pub fn fromCStruct(c_struct: lib.c.Camera3D) Self {
     return .{
-        .position = Vector3.from_c_struct(c_struct.position),
-        .target = Vector3.from_c_struct(c_struct.target),
-        .up = Vector3.from_c_struct(c_struct.up),
+        .position = Vector3.fromCStruct(c_struct.position),
+        .target = Vector3.fromCStruct(c_struct.target),
+        .up = Vector3.fromCStruct(c_struct.up),
         .fovy = c_struct.fovy,
         .projection = @intToEnum(Projection, c_struct.projection),
     };
 }
 
 /// Convert a zig Camera3D to a c api Camera3D
-pub fn to_c_struct(self: Self) lib.c.Camera3D {
+pub fn toCStruct(self: Self) lib.c.Camera3D {
     return .{
-        .position = self.position.to_c_struct(),
-        .target = self.target.to_c_struct(),
-        .up = self.up.to_c_struct(),
+        .position = self.position.toCStruct(),
+        .target = self.target.toCStruct(),
+        .up = self.up.toCStruct(),
         .fovy = self.fovy,
         .projection = @enumToInt(self.projection),
     };
@@ -44,9 +44,9 @@ pub fn to_c_struct(self: Self) lib.c.Camera3D {
 
 /// Update camera position for selected mode
 pub fn update(self: *Self, mode: Mode) void {
-    var c_struct = self.to_c_struct();
+    var c_struct = self.toCStruct();
     lib.c.UpdateCamera(&c_struct, @enumToInt(mode));
-    self.* = from_c_struct(c_struct);
+    self.* = fromCStruct(c_struct);
 }
 
 /// Config for `yaw`
@@ -59,9 +59,9 @@ pub const YawConfig = struct {
 /// Yaw is "looking left and right"
 /// Note: angle must be provided in radians
 pub fn yaw(self: *Self, angle_radians: f32, config: YawConfig) void {
-    var c_struct = self.to_c_struct();
+    var c_struct = self.toCStruct();
     lib.c.CameraYaw(&c_struct, angle_radians, config.rotate_around_target);
-    self.* = from_c_struct(c_struct);
+    self.* = fromCStruct(c_struct);
 }
 
 pub const PitchConfig = struct {
@@ -77,23 +77,23 @@ pub const PitchConfig = struct {
 /// Pitch is "looking up and down"
 /// Note: angle must be provided in radians
 pub fn pitch(self: *Self, angle_radians: f32, config: PitchConfig) void {
-    var c_struct = self.to_c_struct();
+    var c_struct = self.toCStruct();
     lib.c.CameraPitch(&c_struct, angle_radians, config.lock_view, config.rotate_around_target, config.rotate_up);
-    self.* = from_c_struct(c_struct);
+    self.* = fromCStruct(c_struct);
 }
 
 /// Rotates the camera around its forward vector
 /// Roll is "turning your head sideways to the left or right"
 /// Note: angle must be provided in radians
 pub fn roll(self: *Self, angle_radians: f32) void {
-    var c_struct = self.to_c_struct();
+    var c_struct = self.toCStruct();
     lib.c.CameraRoll(&c_struct, angle_radians);
-    self.* = from_c_struct(c_struct);
+    self.* = fromCStruct(c_struct);
 }
 
 /// Get a ray trace from mouse position
 pub fn getMouseRay(self: Self, mouse_position: Vector2) Ray {
-    return Ray.from_c_struct(lib.c.GetMouseRay(mouse_position.to_c_struct(), self.to_c_struct()));
+    return Ray.fromCStruct(lib.c.GetMouseRay(mouse_position.toCStruct(), self.toCStruct()));
 }
 
 /// Camera projection

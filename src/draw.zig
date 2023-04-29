@@ -20,7 +20,7 @@ pub fn end() void {
 
 /// Set background color (framebuffer clear color)
 pub fn clearBackground(color: Color) void {
-    lib.c.ClearBackground(color.to_c_struct());
+    lib.c.ClearBackground(color.toCStruct());
 }
 
 /// Begin 2D mode with custom camera (2D)
@@ -35,7 +35,7 @@ pub fn endMode2D() void {
 
 /// Begin 3D mode with custom camera (3D)
 pub fn beginMode3D(camera: Camera3D) void {
-    lib.c.BeginMode3D(camera.to_c_struct());
+    lib.c.BeginMode3D(camera.toCStruct());
 }
 /// Ends 3D mode and returns to default 2D orthographic mode
 pub fn endMode3D() void {
@@ -78,12 +78,12 @@ pub fn text(msg: [:0]const u8, config: DrawTextConfig) void {
     lib.c.DrawTextPro(
         font,
         msg,
-        config.position.to_c_struct(),
-        config.rotation_origin.to_c_struct(),
+        config.position.toCStruct(),
+        config.rotation_origin.toCStruct(),
         config.rotation_angle,
         config.font_size,
         spacing,
-        config.color.to_c_struct(),
+        config.color.toCStruct(),
     );
 }
 
@@ -110,7 +110,7 @@ pub fn measureText(msg: [:0]const u8, config: MeasureTextConfig) Vector2 {
     else
         lib.c.GetFontDefault();
 
-    return Vector2.from_c_struct(lib.c.MeasureTextEx(font, msg, config.font_size, spacing));
+    return Vector2.fromCStruct(lib.c.MeasureTextEx(font, msg, config.font_size, spacing));
 }
 
 /// Configuration for `circle`
@@ -124,13 +124,13 @@ pub const DrawCircleConfig = struct {
 /// This function combines `DrawCircle`, `DrawCircleV`, and `DrawCircleLines` from the c api
 pub fn circle(center: Vector2, radius: f32, color: Color, config: DrawCircleConfig) void {
     if (config.fill) {
-        lib.c.DrawCircleV(center.to_c_struct(), radius, color.to_c_struct());
+        lib.c.DrawCircleV(center.toCStruct(), radius, color.toCStruct());
     } else {
         lib.c.DrawCircleLines(
-            @floatToInt(i32, center.to_c_struct().x),
-            @floatToInt(i32, center.to_c_struct().y),
+            @floatToInt(i32, center.toCStruct().x),
+            @floatToInt(i32, center.toCStruct().y),
             radius,
-            color.to_c_struct(),
+            color.toCStruct(),
         );
     }
 }
@@ -155,15 +155,15 @@ pub const DrawRectangleConfig = struct {
 pub fn rectangle(rect: Rectangle, color: Color, config: DrawRectangleConfig) void {
     if (config.fill) {
         if (config.roundness == 0) {
-            lib.c.DrawRectangleRec(rect, color.to_c_struct());
+            lib.c.DrawRectangleRec(rect, color.toCStruct());
         } else {
-            lib.c.DrawRectangleRounded(rect, config.roundness, config.segments, color.to_c_struct());
+            lib.c.DrawRectangleRounded(rect, config.roundness, config.segments, color.toCStruct());
         }
     } else {
         if (config.roundness == 0) {
-            lib.c.DrawRectangleLinesEx(rect, config.thickness, color.to_c_struct());
+            lib.c.DrawRectangleLinesEx(rect, config.thickness, color.toCStruct());
         } else {
-            lib.c.DrawRectangleRoundedLines(rect, config.roundness, config.segments, config.thickness, color.to_c_struct());
+            lib.c.DrawRectangleRoundedLines(rect, config.roundness, config.segments, config.thickness, color.toCStruct());
         }
     }
 }
@@ -179,9 +179,9 @@ pub const DrawLineConfig = struct {
 /// This function combines `DrawLine`, `DrawLineV`, and `DrawLineEx` from the c api
 pub fn line(start: Vector2, _end: Vector2, color: Color, config: DrawLineConfig) void {
     if (config.thickness == 1) {
-        lib.c.DrawLineV(start.to_c_struct(), _end.to_c_struct(), color.to_c_struct());
+        lib.c.DrawLineV(start.toCStruct(), _end.toCStruct(), color.toCStruct());
     } else {
-        lib.c.DrawLineEx(start.to_c_struct(), _end.to_c_struct(), config.thickness, color.to_c_struct());
+        lib.c.DrawLineEx(start.toCStruct(), _end.toCStruct(), config.thickness, color.toCStruct());
     }
 }
 
@@ -211,9 +211,9 @@ pub const DrawCubeConfig = struct {
 /// the c api
 pub fn cube(position: Vector3, size: Vector3, color: Color, config: DrawCubeConfig) void {
     if (config.fill) {
-        lib.c.DrawCubeV(position.to_c_struct(), size.to_c_struct(), color.to_c_struct());
+        lib.c.DrawCubeV(position.toCStruct(), size.toCStruct(), color.toCStruct());
     } else {
-        lib.c.DrawCubeWiresV(position.to_c_struct(), size.to_c_struct(), color.to_c_struct());
+        lib.c.DrawCubeWiresV(position.toCStruct(), size.toCStruct(), color.toCStruct());
     }
 }
 
@@ -221,12 +221,12 @@ pub fn cube(position: Vector3, size: Vector3, color: Color, config: DrawCubeConf
 ///
 /// Wrapper around `DrawPlane` from the c api
 pub fn plane(center_position: Vector3, size: Vector2, color: Color) void {
-    lib.c.DrawPlane(center_position.to_c_struct(), size.to_c_struct(), color.to_c_struct());
+    lib.c.DrawPlane(center_position.toCStruct(), size.toCStruct(), color.toCStruct());
 }
 
 /// Draw ray
 ///
 /// Wrapper around `DrawRay` from the c api
 pub fn ray(_ray: Ray, color: Color) void {
-    lib.c.DrawRay(_ray.to_c_struct(), color.to_c_struct());
+    lib.c.DrawRay(_ray.toCStruct(), color.toCStruct());
 }

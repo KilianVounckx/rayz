@@ -28,7 +28,7 @@ pub fn rgb(r: u8, g: u8, b: u8) Self {
 }
 
 /// Convert a c api Color to a zig Color
-pub fn from_c_struct(c_struct: lib.c.Color) Self {
+pub fn fromCStruct(c_struct: lib.c.Color) Self {
     return .{
         .r = c_struct.r,
         .g = c_struct.g,
@@ -38,7 +38,7 @@ pub fn from_c_struct(c_struct: lib.c.Color) Self {
 }
 
 /// Convert a zig Color to a c api Color
-pub fn to_c_struct(self: Self) lib.c.Color {
+pub fn toCStruct(self: Self) lib.c.Color {
     return .{
         .r = self.r,
         .g = self.g,
@@ -49,58 +49,58 @@ pub fn to_c_struct(self: Self) lib.c.Color {
 
 /// Get color with alpha applied, alpha goes from 0.0f to 1.0f
 pub fn fade(self: Self, alpha: f32) Self {
-    return from_c_struct(lib.c.Fade(self.to_c_struct(), alpha));
+    return fromCStruct(lib.c.Fade(self.toCStruct(), alpha));
 }
 
 /// Light Gray
-pub const LIGHTGRAY = from_c_struct(lib.c.LIGHTGRAY);
+pub const LIGHTGRAY = fromCStruct(lib.c.LIGHTGRAY);
 /// Gray
-pub const GRAY = from_c_struct(lib.c.GRAY);
+pub const GRAY = fromCStruct(lib.c.GRAY);
 /// Dark Gray
-pub const DARKGRAY = from_c_struct(lib.c.DARKGRAY);
+pub const DARKGRAY = fromCStruct(lib.c.DARKGRAY);
 /// Yellow
-pub const YELLOW = from_c_struct(lib.c.YELLOW);
+pub const YELLOW = fromCStruct(lib.c.YELLOW);
 /// Gold
-pub const GOLD = from_c_struct(lib.c.GOLD);
+pub const GOLD = fromCStruct(lib.c.GOLD);
 /// Orange
-pub const ORANGE = from_c_struct(lib.c.ORANGE);
+pub const ORANGE = fromCStruct(lib.c.ORANGE);
 /// Pink
-pub const PINK = from_c_struct(lib.c.PINK);
+pub const PINK = fromCStruct(lib.c.PINK);
 /// Red
-pub const RED = from_c_struct(lib.c.RED);
+pub const RED = fromCStruct(lib.c.RED);
 /// Maroon
-pub const MAROON = from_c_struct(lib.c.MAROON);
+pub const MAROON = fromCStruct(lib.c.MAROON);
 /// Green
-pub const GREEN = from_c_struct(lib.c.GREEN);
+pub const GREEN = fromCStruct(lib.c.GREEN);
 /// Lime
-pub const LIME = from_c_struct(lib.c.LIME);
+pub const LIME = fromCStruct(lib.c.LIME);
 /// Dark Green
-pub const DARKGREEN = from_c_struct(lib.c.DARKGREEN);
+pub const DARKGREEN = fromCStruct(lib.c.DARKGREEN);
 /// Sky Blue
-pub const SKYBLUE = from_c_struct(lib.c.SKYBLUE);
+pub const SKYBLUE = fromCStruct(lib.c.SKYBLUE);
 /// Blue
-pub const BLUE = from_c_struct(lib.c.BLUE);
+pub const BLUE = fromCStruct(lib.c.BLUE);
 /// Dark Blue
-pub const DARKBLUE = from_c_struct(lib.c.DARKBLUE);
+pub const DARKBLUE = fromCStruct(lib.c.DARKBLUE);
 /// Purple
-pub const PURPLE = from_c_struct(lib.c.PURPLE);
+pub const PURPLE = fromCStruct(lib.c.PURPLE);
 /// Violet
-pub const VIOLET = from_c_struct(lib.c.VIOLET);
+pub const VIOLET = fromCStruct(lib.c.VIOLET);
 /// Dark Purple
-pub const DARKPURPLE = from_c_struct(lib.c.DARKPURPLE);
+pub const DARKPURPLE = fromCStruct(lib.c.DARKPURPLE);
 /// Beige
-pub const BEIGE = from_c_struct(lib.c.BEIGE);
+pub const BEIGE = fromCStruct(lib.c.BEIGE);
 /// Brown
-pub const BROWN = from_c_struct(lib.c.BROWN);
+pub const BROWN = fromCStruct(lib.c.BROWN);
 /// Dark Brown
-pub const DARKBROWN = from_c_struct(lib.c.DARKBROWN);
+pub const DARKBROWN = fromCStruct(lib.c.DARKBROWN);
 /// White
-pub const WHITE = from_c_struct(lib.c.WHITE);
+pub const WHITE = fromCStruct(lib.c.WHITE);
 /// Black
-pub const BLACK = from_c_struct(lib.c.BLACK);
+pub const BLACK = fromCStruct(lib.c.BLACK);
 /// Blank (Transparent)
-pub const BLANK = from_c_struct(lib.c.BLANK);
+pub const BLANK = fromCStruct(lib.c.BLANK);
 /// Magenta
-pub const MAGENTA = from_c_struct(lib.c.MAGENTA);
+pub const MAGENTA = fromCStruct(lib.c.MAGENTA);
 /// Raylib White (raylib logo)
-pub const RAYWHITE = from_c_struct(lib.c.RAYWHITE);
+pub const RAYWHITE = fromCStruct(lib.c.RAYWHITE);

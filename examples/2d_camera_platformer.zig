@@ -28,7 +28,7 @@ pub fn main() void {
     };
 
     var camera = rl.Camera2D{
-        .target = player.position.to_c_struct(),
+        .target = player.position.toCStruct(),
         .offset = .{ .x = screen_width / 2, .y = screen_height / 2 },
         .rotation = 0,
         .zoom = 1,
@@ -123,7 +123,7 @@ fn updateCameraCenter(
     _ = delta;
     _ = env_items;
     camera.offset = .{ .x = @intToFloat(f32, screen_width) / 2, .y = @intToFloat(f32, screen_height) / 2 };
-    camera.target = player.position.to_c_struct();
+    camera.target = player.position.toCStruct();
 }
 
 fn updateCameraCenterInsideMap(
@@ -135,7 +135,7 @@ fn updateCameraCenterInsideMap(
     screen_height: u16,
 ) void {
     _ = delta;
-    camera.target = player.position.to_c_struct();
+    camera.target = player.position.toCStruct();
     camera.offset = .{ .x = @intToFloat(f32, screen_width) / 2, .y = @intToFloat(f32, screen_height) / 2 };
 
     var min_x: f32 = 1000;
@@ -180,12 +180,12 @@ fn updateCameraCenterSmoothFollow(
     const fraction_speed = 0.8;
 
     camera.offset = .{ .x = @intToFloat(f32, screen_width) / 2, .y = @intToFloat(f32, screen_height) / 2 };
-    const diff = player.position.subtract(rl.Vector2.from_c_struct(camera.target));
+    const diff = player.position.subtract(rl.Vector2.fromCStruct(camera.target));
     const length = diff.length();
 
     if (length > min_effect_length) {
         const speed = std.math.max(fraction_speed * length, min_speed);
-        camera.target = rl.Vector2.from_c_struct(camera.target).add(diff.scale(speed * delta / length)).to_c_struct();
+        camera.target = rl.Vector2.fromCStruct(camera.target).add(diff.scale(speed * delta / length)).toCStruct();
     }
 }
 

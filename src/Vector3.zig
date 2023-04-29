@@ -21,21 +21,21 @@ pub fn init(x: f32, y: f32, z: f32) Self {
 }
 
 /// Convert a c api Vector3 to a zig Vector3
-pub fn from_c_struct(c_struct: lib.c.Vector3) Self {
-    var self: Self = undefined;
-    inline for (comptime std.meta.fieldNames(Self)) |field| {
-        @field(self, field) = @field(c_struct, field);
-    }
-    return self;
+pub fn fromCStruct(c_struct: lib.c.Vector3) Self {
+    return .{
+        .x = c_struct.x,
+        .y = c_struct.y,
+        .z = c_struct.z,
+    };
 }
 
 /// Convert a zig Vector3 to a c api Vector3
-pub fn to_c_struct(self: Self) lib.c.Vector3 {
-    var c_struct: lib.c.Vector3 = undefined;
-    inline for (comptime std.meta.fieldNames(Self)) |field| {
-        @field(c_struct, field) = @field(self, field);
-    }
-    return c_struct;
+pub fn toCStruct(self: Self) lib.c.Vector3 {
+    return .{
+        .x = self.x,
+        .y = self.y,
+        .z = self.z,
+    };
 }
 
 /// Convert a Vector3 to a Vector2
@@ -45,30 +45,30 @@ pub fn withoutZ(self: Self) Vector2 {
 
 /// Add two vectors (v1 + v2)
 pub fn add(self: Self, other: Self) Self {
-    return from_c_struct(lib.c.Vector3Add(self.to_c_struct(), other.to_c_struct()));
+    return fromCStruct(lib.c.Vector3Add(self.toCStruct(), other.toCStruct()));
 }
 
 /// Add vector and float value
 pub fn addValue(self: Self, value: f32) Self {
-    return from_c_struct(lib.c.Vector3AddValue(self.to_c_struct(), value));
+    return fromCStruct(lib.c.Vector3AddValue(self.toCStruct(), value));
 }
 
 /// Subtract two vectors (v1 - v2)
 pub fn subtract(self: Self, other: Self) Self {
-    return from_c_struct(lib.c.Vector3Subtract(self.to_c_struct(), other.to_c_struct()));
+    return fromCStruct(lib.c.Vector3Subtract(self.toCStruct(), other.toCStruct()));
 }
 
 /// Scale vector (multiply by value)
 pub fn scale(self: Self, factor: f32) Self {
-    return from_c_struct(lib.c.Vector3Scale(self.to_c_struct(), factor));
+    return fromCStruct(lib.c.Vector3Scale(self.toCStruct(), factor));
 }
 
 /// Calculate vector length
 pub fn length(self: Self) f32 {
-    return lib.c.Vector3Length(self.to_c_struct());
+    return lib.c.Vector3Length(self.toCStruct());
 }
 
 /// Get the screen space position for a 3d world space position
 pub fn worldToScreen(self: Self, camera: Camera3D) Vector2 {
-    return Vector2.from_c_struct(lib.c.GetWorldToScreen(self.to_c_struct(), camera.to_c_struct()));
+    return Vector2.fromCStruct(lib.c.GetWorldToScreen(self.toCStruct(), camera.toCStruct()));
 }
