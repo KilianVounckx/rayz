@@ -4,6 +4,7 @@ const std = @import("std");
 
 const lib = @import("lib.zig");
 const Camera2D = lib.Camera2D;
+const Vector3 = lib.Vector3;
 
 const Self = @This();
 
@@ -33,6 +34,11 @@ pub fn to_c_struct(self: Self) lib.c.Vector2 {
         @field(c_struct, field) = @field(self, field);
     }
     return c_struct;
+}
+
+/// Convert a Vector2 to a Vector3
+pub fn withZ(self: Self, z: f32) Vector3 {
+    return .{ .x = self.x, .y = self.y, .z = z };
 }
 
 /// Add two vectors (v1 + v2)

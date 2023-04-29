@@ -4,6 +4,7 @@ const std = @import("std");
 
 const lib = @import("lib.zig");
 const Camera3D = lib.Camera3D;
+const Vector2 = lib.Vector2;
 
 const Self = @This();
 
@@ -37,6 +38,11 @@ pub fn to_c_struct(self: Self) lib.c.Vector3 {
     return c_struct;
 }
 
+/// Convert a Vector3 to a Vector2
+pub fn withoutZ(self: Self) Vector2 {
+    return .{ .x = self.x, .y = self.y };
+}
+
 /// Add two vectors (v1 + v2)
 pub fn add(self: Self, other: Self) Self {
     return from_c_struct(lib.c.Vector3Add(self.to_c_struct(), other.to_c_struct()));
@@ -63,6 +69,6 @@ pub fn length(self: Self) f32 {
 }
 
 /// Get the screen space position for a 3d world space position
-pub fn worldToScreen(self: Self, camera: Camera3D) Self {
-    return from_c_struct(lib.c.GetWorldToScreen(self.to_c_struct(), camera));
+pub fn worldToScreen(self: Self, camera: Camera3D) Vector2 {
+    return Vector2.from_c_struct(lib.c.GetWorldToScreen(self.to_c_struct(), camera.to_c_struct()));
 }
