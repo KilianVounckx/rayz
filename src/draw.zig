@@ -178,7 +178,7 @@ pub const DrawCubeConfig = struct {
     fill: bool = true,
 };
 
-/// Draw Cube
+/// Draw cube
 ///
 /// This function combines `DrawCube`, `DrawCubeV`, `DrawCubeWires`, and `DrawCubeWiresV` from
 /// the c api
@@ -188,4 +188,11 @@ pub fn cube(position: Vector3, size: Vector3, color: Color, config: DrawCubeConf
     } else {
         lib.c.DrawCubeWiresV(position.to_c_struct(), size.to_c_struct(), color.to_c_struct());
     }
+}
+
+/// Draw plane
+///
+/// Wrapper around `DrawPlane` from the c api
+pub fn plane(center_position: Vector3, size: Vector2, color: Color) void {
+    lib.c.DrawPlane(center_position.to_c_struct(), size.to_c_struct(), color.to_c_struct());
 }

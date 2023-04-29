@@ -22,7 +22,7 @@ pub fn main() void {
             const wheel = rl.input.getMouseWheelMove();
             if (wheel != 0) {
                 camera.offset = rl.input.getMousePosition().to_c_struct();
-                const mouse_world_pos = rl.Vector2.from_c_struct(camera.offset).screenToWorld2D(camera);
+                const mouse_world_pos = rl.Vector2.from_c_struct(camera.offset).screenToWorld(camera);
                 camera.target = mouse_world_pos.to_c_struct();
 
                 const zoom_increment = 0.125;

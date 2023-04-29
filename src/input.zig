@@ -220,15 +220,16 @@ pub const KeyboardKey = enum(i32) {
     kp_enter = 335,
     /// Key: Keypad =
     kp_equal = 336,
-    // // Android key buttons
-    // /// Key: Android back button
-    // back = 4,
-    // /// Key: Android menu button
-    // menu = 82,
-    // /// Key: Android volume up button
-    // volume_up = 24,
-    // /// Key: Android volume down button
-    // volume_down = 25,
+
+    // Android key buttons
+    /// Key: Android back button
+    pub const back = @intToEnum(KeyboardKey, 4);
+    /// Key: Android menu button
+    pub const menu = @intToEnum(KeyboardKey, 82);
+    /// Key: Android volume up button
+    pub const volume_up = @intToEnum(KeyboardKey, 24);
+    /// Key: Android volume down button
+    pub const volume_down = @intToEnum(KeyboardKey, 25);
 };
 
 /// Check if a key is being pressed
@@ -294,6 +295,7 @@ pub fn getMouseDelta() Vector2 {
     return Vector2.from_c_struct(lib.c.GetMouseDelta());
 }
 
+/// Gesture bit flags
 pub const GestureFlags = blk: {
     var fields: []const std.builtin.Type.StructField = &[_]std.builtin.Type.StructField{};
     const default_field = false;
@@ -330,6 +332,7 @@ pub const GestureFlags = blk: {
     } });
 };
 
+/// Gesture
 pub const Gesture = enum(u16) {
     /// No gesture
     none = 0,
@@ -355,6 +358,7 @@ pub const Gesture = enum(u16) {
     pinch_out = 512,
 };
 
+/// Enable a set of gestures using flags
 pub fn setGesturesEnabled(flags: GestureFlags) void {
     lib.c.SetGesturesEnabled(@bitCast(u16, flags));
 }

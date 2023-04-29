@@ -149,8 +149,8 @@ fn updateCameraCenterInsideMap(
         max_y = std.math.max(item.rectangle.y + item.rectangle.height, max_y);
     }
 
-    const min = rl.Vector2.init(min_x, min_y).worldToScreen2D(camera.*);
-    const max = rl.Vector2.init(max_x, max_y).worldToScreen2D(camera.*);
+    const min = rl.Vector2.init(min_x, min_y).worldToScreen(camera.*);
+    const max = rl.Vector2.init(max_x, max_y).worldToScreen(camera.*);
 
     if (min.x > 0) {
         camera.offset.x = @intToFloat(f32, screen_width) / 2 - min.x;
@@ -242,11 +242,11 @@ fn updateCameraPlayerBoundsPush(
     const bounding_box_world_min = rl.Vector2.init(
         (1 - bounding_box.x) * 0.5 * @intToFloat(f32, screen_width),
         (1 - bounding_box.y) * 0.5 * @intToFloat(f32, screen_height),
-    ).screenToWorld2D(camera.*);
+    ).screenToWorld(camera.*);
     const bounding_box_world_max = rl.Vector2.init(
         (1 + bounding_box.x) * 0.5 * @intToFloat(f32, screen_width),
         (1 + bounding_box.y) * 0.5 * @intToFloat(f32, screen_height),
-    ).screenToWorld2D(camera.*);
+    ).screenToWorld(camera.*);
 
     camera.offset = .{
         .x = (1 - bounding_box.x) * 0.5 * @intToFloat(f32, screen_width),

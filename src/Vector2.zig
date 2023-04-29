@@ -7,13 +7,17 @@ const Camera2D = lib.Camera2D;
 
 const Self = @This();
 
+/// Vector x component
 x: f32 = 0,
+/// Vector y component
 y: f32 = 0,
 
+/// Create a new 2D vector
 pub fn init(x: f32, y: f32) Self {
     return .{ .x = x, .y = y };
 }
 
+/// Convert a c api Vector2 to a zig Vector2
 pub fn from_c_struct(c_struct: lib.c.Vector2) Self {
     var self: Self = undefined;
     inline for (comptime std.meta.fieldNames(Self)) |field| {
@@ -22,6 +26,7 @@ pub fn from_c_struct(c_struct: lib.c.Vector2) Self {
     return self;
 }
 
+/// Convert a zig Vector2 to a c api Vector2
 pub fn to_c_struct(self: Self) lib.c.Vector2 {
     var c_struct: lib.c.Vector2 = undefined;
     inline for (comptime std.meta.fieldNames(Self)) |field| {
@@ -30,26 +35,32 @@ pub fn to_c_struct(self: Self) lib.c.Vector2 {
     return c_struct;
 }
 
+/// Add two vectors (v1 + v2)
 pub fn add(self: Self, other: Self) Self {
     return from_c_struct(lib.c.Vector2Add(self.to_c_struct(), other.to_c_struct()));
 }
 
+/// Subtract two vectors (v1 - v2)
 pub fn subtract(self: Self, other: Self) Self {
     return from_c_struct(lib.c.Vector2Subtract(self.to_c_struct(), other.to_c_struct()));
 }
 
+/// Scale vector (multiply by value)
 pub fn scale(self: Self, factor: f32) Self {
     return from_c_struct(lib.c.Vector2Scale(self.to_c_struct(), factor));
 }
 
+/// Calculate vector length
 pub fn length(self: Self) f32 {
     return lib.c.Vector2Length(self.to_c_struct());
 }
 
-pub fn screenToWorld2D(self: Self, camera: Camera2D) Self {
+/// Get the world space position for a 2d camera screen space position
+pub fn screenToWorld(self: Self, camera: Camera2D) Self {
     return from_c_struct(lib.c.GetScreenToWorld2D(self.to_c_struct(), camera));
 }
 
-pub fn worldToScreen2D(self: Self, camera: Camera2D) Self {
+/// Get the screen space position for a 2d camera world space position
+pub fn worldToScreen(self: Self, camera: Camera2D) Self {
     return from_c_struct(lib.c.GetWorldToScreen2D(self.to_c_struct(), camera));
 }
