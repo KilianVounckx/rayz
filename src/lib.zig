@@ -75,6 +75,16 @@ pub fn getFrameTime() f32 {
     return c.GetFrameTime();
 }
 
+/// Disables cursor (lock cursor)
+pub fn disableCursor() void {
+    c.DisableCursor();
+}
+
+/// Enables cursor (unlock cursor)
+pub fn enableCursor() void {
+    c.enableCursor();
+}
+
 test "c" {
     std.testing.refAllDeclsRecursive(@This());
 }

@@ -6,6 +6,7 @@ const lib = @import("lib.zig");
 const Vector3 = lib.Vector3;
 
 const Self = @This();
+
 /// Camera position
 position: Vector3,
 /// Camera target it looks-at
@@ -37,10 +38,30 @@ pub fn to_c_struct(self: Self) lib.c.Camera3D {
     };
 }
 
+pub fn update(self: *Self, mode: Mode) void {
+    var c_struct = self.to_c_struct();
+    lib.c.UpdateCamera(&c_struct, @enumToInt(mode));
+    self.* = from_c_struct(c_struct);
+}
+
 /// Camera projection
-const Projection = enum(u8) {
+pub const Projection = enum(u8) {
     /// Perspective projection
     perspective = 0,
     /// Orthographic projection
     orthographic,
+};
+
+/// Camera system modes
+pub const Mode = enum(u8) {
+    /// Camera custom, controlled by user (UpdateCamera() does nothing)
+    custom = 0,
+    /// Camera free mode
+    free,
+    /// Camera orbital, around target, zoom supported
+    orbital,
+    /// Camera first person
+    first_person,
+    /// Camera third person
+    third_person,
 };
