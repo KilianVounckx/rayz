@@ -1,9 +1,11 @@
 const std = @import("std");
 
 pub const Camera2D = c.Camera2D;
+pub const Camera3D = @import("Camera3D.zig");
 pub const Color = @import("Color.zig");
 pub const Rectangle = c.Rectangle;
 pub const Vector2 = @import("Vector2.zig");
+pub const Vector3 = @import("Vector3.zig");
 pub const c = @import("c.zig");
 pub const collision = @import("collision.zig");
 pub const draw = @import("draw.zig");
