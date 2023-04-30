@@ -92,6 +92,71 @@ pub fn isCursorHidden() bool {
     return c.IsCursorHidden();
 }
 
+/// Get current screen size
+///
+/// This function combines `GetScreenWidth` and `GetScreenHeight` from the c api
+pub fn getScreenSize() Vector2 {
+    return .{
+        .x = @intToFloat(f32, c.GetScreenWidth()),
+        .y = @intToFloat(f32, c.GetScreenHeight()),
+    };
+}
+
+/// Toggle window state: fullscreen/windowed (only PLATFORM_DESKTOP)
+///
+/// Wrapper around `ToggleFullscreen` from the c api
+pub fn toggleFullscreen() void {
+    c.ToggleFullscreen();
+}
+
+/// Check if one specific window flag is enabled
+///
+/// Wrapper around `IsWindowState` from the c api
+pub fn isWindowState(flag: std.meta.FieldEnum(ConfigFlags)) bool {
+    var flags = ConfigFlags{};
+    inline for (comptime std.meta.fields(ConfigFlags)) |field| {
+        if (field.type == bool and std.mem.eql(u8, field.name, @tagName(flag))) {
+            @field(flags, field.name) = true;
+        }
+    }
+    return c.IsWindowState(@bitCast(u32, flags));
+}
+
+/// Clear window configuration state flags
+///
+/// Wrapper around `ClearWindowState` from the c api
+pub fn clearWindowState(flags: ConfigFlags) void {
+    c.ClearWindowState(@bitCast(u32, flags));
+}
+
+/// Set window configuration state using flags (only PLATFORM_DESKTOP)
+///
+/// Wrapper around `SetWindowState` from the c api
+pub fn setWindowState(flags: ConfigFlags) void {
+    c.SetWindowState(@bitCast(u32, flags));
+}
+
+/// Set window state: minimized, if resizable (only PLATFORM_DESKTOP)
+///
+/// Wrapper around `MinimizeWindow` from the c api
+pub fn minimizeWindow() void {
+    c.MinimizeWindow();
+}
+
+/// Set window state: maximized, if resizable (only PLATFORM_DESKTOP)
+///
+/// Wrapper around `MaximizeWindow` from the c api
+pub fn maximizeWindow() void {
+    c.MaximizeWindow();
+}
+
+/// Set window state: not minimized/maximized (only PLATFORM_DESKTOP)
+///
+/// Wrapper around `RestoreWindow` from the c api
+pub fn restoreWindow() void {
+    c.RestoreWindow();
+}
+
 test "c" {
     std.testing.refAllDeclsRecursive(@This());
 }
