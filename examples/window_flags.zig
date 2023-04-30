@@ -11,7 +11,7 @@ pub fn main() !void {
     const screen_width = 800;
     const screen_height = 450;
 
-    rl.initWindow(
+    rl.window.init(
         screen_width,
         screen_height,
         "raylib [core] example - window flags",
@@ -19,7 +19,7 @@ pub fn main() !void {
             //.window_transparent = true
         },
     );
-    defer rl.closeWindow();
+    defer rl.window.close();
 
     var ball_position = rl.getScreenSize().scale(0.5);
     var ball_speed = rl.Vector2{ .x = 5, .y = 4 };
@@ -29,82 +29,82 @@ pub fn main() !void {
 
     rl.setTargetFps(60);
 
-    while (!rl.windowShouldClose()) {
+    while (!rl.window.shouldClose()) {
         { //update
             const screen_size = rl.getScreenSize();
             if (rl.input.isKeyPressed(.f))
-                rl.toggleFullscreen();
+                rl.window.toggleFullscreen();
 
             if (rl.input.isKeyPressed(.r)) {
-                if (rl.isWindowState(.window_resizable))
-                    rl.clearWindowState(.{ .window_resizable = true })
+                if (rl.window.isState(.window_resizable))
+                    rl.window.clearState(.{ .window_resizable = true })
                 else
-                    rl.setWindowState(.{ .window_resizable = true });
+                    rl.window.setState(.{ .window_resizable = true });
             }
 
             if (rl.input.isKeyPressed(.d)) {
-                if (rl.isWindowState(.window_undecorated))
-                    rl.clearWindowState(.{ .window_undecorated = true })
+                if (rl.window.isState(.window_undecorated))
+                    rl.window.clearState(.{ .window_undecorated = true })
                 else
-                    rl.setWindowState(.{ .window_undecorated = true });
+                    rl.window.setState(.{ .window_undecorated = true });
             }
 
             if (rl.input.isKeyPressed(.h)) {
-                if (!rl.isWindowState(.window_hidden))
-                    rl.setWindowState(.{ .window_hidden = true });
+                if (!rl.window.isState(.window_hidden))
+                    rl.window.setState(.{ .window_hidden = true });
                 frame_counter = 0;
             }
-            if (rl.isWindowState(.window_hidden)) {
+            if (rl.window.isState(.window_hidden)) {
                 frame_counter += 1;
                 if (frame_counter >= 240)
-                    rl.clearWindowState(.{ .window_hidden = true });
+                    rl.window.clearState(.{ .window_hidden = true });
             }
 
             if (rl.input.isKeyPressed(.n)) {
-                if (!rl.isWindowState(.window_minimized))
-                    rl.minimizeWindow();
+                if (!rl.window.isState(.window_minimized))
+                    rl.window.minimize();
                 frame_counter = 0;
             }
 
-            if (rl.isWindowState(.window_minimized)) {
+            if (rl.window.isState(.window_minimized)) {
                 frame_counter += 1;
                 if (frame_counter >= 240)
-                    rl.restoreWindow();
+                    rl.window.restore();
             }
 
             if (rl.input.isKeyPressed(.m)) {
-                if (rl.isWindowState(.window_maximized))
-                    rl.restoreWindow()
+                if (rl.window.isState(.window_maximized))
+                    rl.window.restore()
                 else
-                    rl.maximizeWindow();
+                    rl.window.maximize();
             }
 
             if (rl.input.isKeyPressed(.u)) {
-                if (rl.isWindowState(.window_unfocused))
-                    rl.clearWindowState(.{ .window_unfocused = true })
+                if (rl.window.isState(.window_unfocused))
+                    rl.window.clearState(.{ .window_unfocused = true })
                 else
-                    rl.setWindowState(.{ .window_unfocused = true });
+                    rl.window.setState(.{ .window_unfocused = true });
             }
 
             if (rl.input.isKeyPressed(.t)) {
-                if (rl.isWindowState(.window_topmost))
-                    rl.clearWindowState(.{ .window_topmost = true })
+                if (rl.window.isState(.window_topmost))
+                    rl.window.clearState(.{ .window_topmost = true })
                 else
-                    rl.setWindowState(.{ .window_topmost = true });
+                    rl.window.setState(.{ .window_topmost = true });
             }
 
             if (rl.input.isKeyPressed(.a)) {
-                if (rl.isWindowState(.window_always_run))
-                    rl.clearWindowState(.{ .window_always_run = true })
+                if (rl.window.isState(.window_always_run))
+                    rl.window.clearState(.{ .window_always_run = true })
                 else
-                    rl.setWindowState(.{ .window_always_run = true });
+                    rl.window.setState(.{ .window_always_run = true });
             }
 
             if (rl.input.isKeyPressed(.v)) {
-                if (rl.isWindowState(.vsync_hint))
-                    rl.clearWindowState(.{ .vsync_hint = true })
+                if (rl.window.isState(.vsync_hint))
+                    rl.window.clearState(.{ .vsync_hint = true })
                 else
-                    rl.setWindowState(.{ .vsync_hint = true });
+                    rl.window.setState(.{ .vsync_hint = true });
             }
 
             ball_position.x += ball_speed.x;
@@ -125,7 +125,7 @@ pub fn main() !void {
             rl.draw.begin();
             defer rl.draw.end();
 
-            rl.draw.clearBackground(if (rl.isWindowState(.window_transparent)) rl.Color.BLANK else rl.Color.RAYWHITE);
+            rl.draw.clearBackground(if (rl.window.isState(.window_transparent)) rl.Color.BLANK else rl.Color.RAYWHITE);
 
             const screen_size = rl.getScreenSize();
             rl.draw.circle(ball_position, ball_radius, rl.Color.MAROON, .{});
@@ -145,57 +145,57 @@ pub fn main() !void {
             rl.draw.text(size_text, .{ .position = .{ .x = 10, .y = 40 }, .font_size = 10, .color = rl.Color.GREEN });
 
             rl.draw.text("Following flags can be set after window creation:", .{ .position = .{ .x = 10, .y = 60 }, .font_size = 10, .color = rl.Color.GRAY });
-            if (rl.isWindowState(.fullscreen_mode))
+            if (rl.window.isState(.fullscreen_mode))
                 rl.draw.text("[F] FLAG_FULLSCREEN_MODE: on", .{ .position = .{ .x = 10, .y = 80 }, .font_size = 10, .color = rl.Color.LIME })
             else
                 rl.draw.text("[F] FLAG_FULLSCREEN_MODE: off", .{ .position = .{ .x = 10, .y = 80 }, .font_size = 10, .color = rl.Color.MAROON });
-            if (rl.isWindowState(.window_resizable))
+            if (rl.window.isState(.window_resizable))
                 rl.draw.text("[R] FLAG_WINDOW_RESIZABLE: on", .{ .position = .{ .x = 10, .y = 100 }, .font_size = 10, .color = rl.Color.LIME })
             else
                 rl.draw.text("[R] FLAG_WINDOW_RESIZABLE: off", .{ .position = .{ .x = 10, .y = 100 }, .font_size = 10, .color = rl.Color.MAROON });
-            if (rl.isWindowState(.window_undecorated))
+            if (rl.window.isState(.window_undecorated))
                 rl.draw.text("[D] FLAG_WINDOW_UNDECORATED: on", .{ .position = .{ .x = 10, .y = 120 }, .font_size = 10, .color = rl.Color.LIME })
             else
                 rl.draw.text("[D] FLAG_WINDOW_UNDECORATED: off", .{ .position = .{ .x = 10, .y = 120 }, .font_size = 10, .color = rl.Color.MAROON });
-            if (rl.isWindowState(.window_hidden))
+            if (rl.window.isState(.window_hidden))
                 rl.draw.text("[H] FLAG_WINDOW_HIDDEN: on", .{ .position = .{ .x = 10, .y = 140 }, .font_size = 10, .color = rl.Color.LIME })
             else
                 rl.draw.text("[H] FLAG_WINDOW_HIDDEN: off", .{ .position = .{ .x = 10, .y = 140 }, .font_size = 10, .color = rl.Color.MAROON });
-            if (rl.isWindowState(.window_minimized))
+            if (rl.window.isState(.window_minimized))
                 rl.draw.text("[N] FLAG_WINDOW_MINIMIZED: on", .{ .position = .{ .x = 10, .y = 160 }, .font_size = 10, .color = rl.Color.LIME })
             else
                 rl.draw.text("[N] FLAG_WINDOW_MINIMIZED: off", .{ .position = .{ .x = 10, .y = 160 }, .font_size = 10, .color = rl.Color.MAROON });
-            if (rl.isWindowState(.window_maximized))
+            if (rl.window.isState(.window_maximized))
                 rl.draw.text("[M] FLAG_WINDOW_MAXIMIZED: on", .{ .position = .{ .x = 10, .y = 180 }, .font_size = 10, .color = rl.Color.LIME })
             else
                 rl.draw.text("[M] FLAG_WINDOW_MAXIMIZED: off", .{ .position = .{ .x = 10, .y = 180 }, .font_size = 10, .color = rl.Color.MAROON });
-            if (rl.isWindowState(.window_unfocused))
+            if (rl.window.isState(.window_unfocused))
                 rl.draw.text("[G] FLAG_WINDOW_UNFOCUSED: on", .{ .position = .{ .x = 10, .y = 200 }, .font_size = 10, .color = rl.Color.LIME })
             else
                 rl.draw.text("[U] FLAG_WINDOW_UNFOCUSED: off", .{ .position = .{ .x = 10, .y = 200 }, .font_size = 10, .color = rl.Color.MAROON });
-            if (rl.isWindowState(.window_topmost))
+            if (rl.window.isState(.window_topmost))
                 rl.draw.text("[T] FLAG_WINDOW_TOPMOST: on", .{ .position = .{ .x = 10, .y = 220 }, .font_size = 10, .color = rl.Color.LIME })
             else
                 rl.draw.text("[T] FLAG_WINDOW_TOPMOST: off", .{ .position = .{ .x = 10, .y = 220 }, .font_size = 10, .color = rl.Color.MAROON });
-            if (rl.isWindowState(.window_always_run))
+            if (rl.window.isState(.window_always_run))
                 rl.draw.text("[A] FLAG_WINDOW_ALWAYS_RUN: on", .{ .position = .{ .x = 10, .y = 240 }, .font_size = 10, .color = rl.Color.LIME })
             else
                 rl.draw.text("[A] FLAG_WINDOW_ALWAYS_RUN: off", .{ .position = .{ .x = 10, .y = 240 }, .font_size = 10, .color = rl.Color.MAROON });
-            if (rl.isWindowState(.vsync_hint))
+            if (rl.window.isState(.vsync_hint))
                 rl.draw.text("[V] FLAG_VSYNC_HINT: on", .{ .position = .{ .x = 10, .y = 260 }, .font_size = 10, .color = rl.Color.LIME })
             else
                 rl.draw.text("[V] FLAG_VSYNC_HINT: off", .{ .position = .{ .x = 10, .y = 260 }, .font_size = 10, .color = rl.Color.MAROON });
 
             rl.draw.text("Following flags can only be set before window creation:", .{ .position = .{ .x = 10, .y = 300 }, .font_size = 10, .color = rl.Color.GRAY });
-            if (rl.isWindowState(.window_highdpi))
+            if (rl.window.isState(.window_highdpi))
                 rl.draw.text("FLAG_WINDOW_HIGHDPI: on", .{ .position = .{ .x = 10, .y = 320 }, .font_size = 10, .color = rl.Color.LIME })
             else
                 rl.draw.text("FLAG_WINDOW_HIGHDPI: off", .{ .position = .{ .x = 10, .y = 320 }, .font_size = 10, .color = rl.Color.MAROON });
-            if (rl.isWindowState(.window_transparent))
+            if (rl.window.isState(.window_transparent))
                 rl.draw.text("FLAG_WINDOW_TRANSPARENT: on", .{ .position = .{ .x = 10, .y = 340 }, .font_size = 10, .color = rl.Color.LIME })
             else
                 rl.draw.text("FLAG_WINDOW_TRANSPARENT: off", .{ .position = .{ .x = 10, .y = 340 }, .font_size = 10, .color = rl.Color.MAROON });
-            if (rl.isWindowState(.msaa_4x_hint))
+            if (rl.window.isState(.msaa_4x_hint))
                 rl.draw.text("FLAG_MSAA_4X_HINT: on", .{ .position = .{ .x = 10, .y = 360 }, .font_size = 10, .color = rl.Color.LIME })
             else
                 rl.draw.text("FLAG_MSAA_4X_HINT: off", .{ .position = .{ .x = 10, .y = 360 }, .font_size = 10, .color = rl.Color.MAROON });

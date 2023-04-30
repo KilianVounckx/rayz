@@ -16,8 +16,8 @@ pub fn main() !void {
     const screen_width = 800;
     const screen_height = 450;
 
-    rl.initWindow(screen_width, screen_height, "raylib [core] example - 3d camera first person", .{});
-    defer rl.closeWindow();
+    rl.window.init(screen_width, screen_height, "raylib [core] example - 3d camera first person", .{});
+    defer rl.window.close();
 
     var camera = rl.Camera3D{
         .position = .{ .x = 0, .y = 2, .z = 4 },
@@ -53,7 +53,7 @@ pub fn main() !void {
 
     rl.setTargetFps(60);
 
-    while (!rl.windowShouldClose()) {
+    while (!rl.window.shouldClose()) {
         { //update
             if (rl.input.isKeyPressed(.one)) {
                 camera_mode = .free;

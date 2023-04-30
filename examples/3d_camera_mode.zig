@@ -4,8 +4,8 @@ pub fn main() void {
     const screen_width = 800;
     const screen_height = 450;
 
-    rl.initWindow(screen_width, screen_height, "raylib [core] example - 3d camera mode", .{});
-    defer rl.closeWindow();
+    rl.window.init(screen_width, screen_height, "raylib [core] example - 3d camera mode", .{});
+    defer rl.window.close();
 
     const camera = rl.Camera3D{
         .position = .{ .x = 0, .y = 10, .z = 10 },
@@ -19,7 +19,7 @@ pub fn main() void {
 
     rl.setTargetFps(60);
 
-    while (!rl.windowShouldClose()) {
+    while (!rl.window.shouldClose()) {
         rl.draw.begin();
         defer rl.draw.end();
         rl.draw.clearBackground(rl.Color.RAYWHITE);

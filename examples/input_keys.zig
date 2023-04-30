@@ -4,13 +4,14 @@ pub fn main() void {
     const screen_width = 800;
     const screen_height = 450;
 
-    rl.initWindow(screen_width, screen_height, "raylib [core] example - keyboard input", .{});
+    rl.window.init(screen_width, screen_height, "raylib [core] example - keyboard input", .{});
+    defer rl.window.close();
 
     var ball_position = rl.Vector2.init(screen_width / 2.0, screen_height / 2.0);
 
     rl.setTargetFps(60);
 
-    while (!rl.windowShouldClose()) {
+    while (!rl.window.shouldClose()) {
         { // Update
             if (rl.input.isKeyDown(.left)) ball_position.x -= 2.0;
             if (rl.input.isKeyDown(.right)) ball_position.x += 2.0;

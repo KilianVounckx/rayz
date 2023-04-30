@@ -4,12 +4,12 @@ pub fn main() !void {
     const screen_width = 800;
     const screen_height = 450;
 
-    rl.initWindow(screen_width, screen_height, "raylib [core] example - basic window", .{});
-    defer rl.closeWindow();
+    rl.window.init(screen_width, screen_height, "raylib [core] example - basic window", .{});
+    defer rl.window.close();
 
     rl.setTargetFps(60);
 
-    while (!rl.windowShouldClose()) {
+    while (!rl.window.shouldClose()) {
         rl.draw.begin();
         defer rl.draw.end();
 

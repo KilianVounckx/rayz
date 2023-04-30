@@ -11,8 +11,8 @@ pub fn main() void {
     const screen_width = 800;
     const screen_height = 450;
 
-    rl.initWindow(screen_width, screen_height, "raylib [core] example - 2d camera", .{});
-    defer rl.closeWindow();
+    rl.window.init(screen_width, screen_height, "raylib [core] example - 2d camera", .{});
+    defer rl.window.close();
 
     var player = rl.Rectangle{ .x = 400, .y = 280, .width = 40, .height = 40 };
     var buildings: [max_buildings]rl.Rectangle = undefined;
@@ -43,7 +43,7 @@ pub fn main() void {
 
     rl.setTargetFps(60);
 
-    while (!rl.windowShouldClose()) {
+    while (!rl.window.shouldClose()) {
         { // update
             if (rl.input.isKeyDown(.left)) {
                 player.x -= 2;

@@ -11,15 +11,15 @@ pub fn main() !void {
     const screen_width = 800;
     const screen_height = 450;
 
-    rl.initWindow(screen_width, screen_height, "raylib [core] example - input mouse wheel", .{});
-    defer rl.closeWindow();
+    rl.window.init(screen_width, screen_height, "raylib [core] example - input mouse wheel", .{});
+    defer rl.window.close();
 
     var box_position_y: f32 = screen_height / 2 - 40;
     const scroll_speed = 4;
 
     rl.setTargetFps(60);
 
-    while (!rl.windowShouldClose()) {
+    while (!rl.window.shouldClose()) {
         { // update
             box_position_y -= rl.input.getMouseWheelMove() * scroll_speed;
         }

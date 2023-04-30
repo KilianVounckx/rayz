@@ -4,15 +4,15 @@ pub fn main() void {
     const screen_width = 800;
     const screen_height = 450;
 
-    rl.initWindow(screen_width, screen_height, "raylib [core] example - 2d camera mouse zoom", .{});
-    defer rl.closeWindow();
+    rl.window.init(screen_width, screen_height, "raylib [core] example - 2d camera mouse zoom", .{});
+    defer rl.window.close();
 
     var camera: rl.Camera2D = undefined;
     camera.zoom = 1;
 
     rl.setTargetFps(60);
 
-    while (!rl.windowShouldClose()) {
+    while (!rl.window.shouldClose()) {
         { // update
             if (rl.input.isMouseButtonDown(.right)) {
                 var delta = rl.input.getMouseDelta().scale(-1 / camera.zoom);

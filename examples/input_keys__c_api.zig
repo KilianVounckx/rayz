@@ -6,6 +6,7 @@ pub fn main() void {
     const screen_height = 450;
 
     rl.InitWindow(screen_width, screen_height, "raylib [core] example - keyboard input");
+    defer rl.CloseWindow();
 
     var ball_position = rl.Vector2{ .x = screen_width / 2.0, .y = screen_height / 2.0 };
 

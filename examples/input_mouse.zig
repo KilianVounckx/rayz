@@ -4,15 +4,15 @@ pub fn main() void {
     const screen_width = 800;
     const screen_height = 450;
 
-    rl.initWindow(screen_width, screen_height, "raylib [core] example - mouse input", .{});
-    defer rl.closeWindow();
+    rl.window.init(screen_width, screen_height, "raylib [core] example - mouse input", .{});
+    defer rl.window.close();
 
     var ball_position = rl.Vector2.init(-100, 100);
     var ball_color = rl.Color.DARKBLUE;
 
     rl.setTargetFps(60);
 
-    while (!rl.windowShouldClose()) {
+    while (!rl.window.shouldClose()) {
         { // update
             ball_position = rl.input.getMousePosition();
 

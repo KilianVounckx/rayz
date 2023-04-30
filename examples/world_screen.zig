@@ -11,8 +11,8 @@ pub fn main() !void {
     const screen_width = 800;
     const screen_height = 450;
 
-    rl.initWindow(screen_width, screen_height, "raylib [core] example - world screen", .{});
-    defer rl.closeWindow();
+    rl.window.init(screen_width, screen_height, "raylib [core] example - world screen", .{});
+    defer rl.window.close();
 
     var camera = rl.Camera3D{
         .position = .{ .x = 10, .y = 10, .z = 10 },
@@ -29,7 +29,7 @@ pub fn main() !void {
 
     rl.setTargetFps(60);
 
-    while (!rl.windowShouldClose()) {
+    while (!rl.window.shouldClose()) {
         { //update
             camera.update(.third_person);
             cube_screen_position = cube_position.add(.{ .y = 2.5 }).worldToScreen(camera);

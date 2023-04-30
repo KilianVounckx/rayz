@@ -8,8 +8,8 @@ pub fn main() void {
     const screen_width = 800;
     const screen_height = 450;
 
-    rl.initWindow(screen_width, screen_height, "raylib [core] example - input gestures", .{});
-    defer rl.closeWindow();
+    rl.window.init(screen_width, screen_height, "raylib [core] example - input gestures", .{});
+    defer rl.window.close();
 
     var touch_position = rl.Vector2.init(0, 0);
     const touch_area = rl.Rectangle{
@@ -29,7 +29,7 @@ pub fn main() void {
 
     rl.setTargetFps(60);
 
-    while (!rl.windowShouldClose()) {
+    while (!rl.window.shouldClose()) {
         { // update
             previous_gesture = current_gesture;
             current_gesture = rl.input.getGestureDetected();
