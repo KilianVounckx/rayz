@@ -15,7 +15,8 @@ pub fn main() !void {
         screen_width,
         screen_height,
         "raylib [core] example - window flags",
-        .{ //.window_transparent = true
+        .{
+            //.window_transparent = true
         },
     );
     defer rl.closeWindow();
