@@ -32,5 +32,5 @@ pub fn scale(x: f32, y: f32, z: f32) void {
 
 /// Multiply the current matrix by another matrix
 pub fn multMatrix(matrix: [16]f32) void {
-    lib.c.rlMultMatrix(matrix);
+    lib.c.rlMultMatrixf(&matrix);
 }

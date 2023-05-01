@@ -52,6 +52,19 @@ pub fn getScreenSize() Vector2 {
     };
 }
 
-test "c" {
-    std.testing.refAllDeclsRecursive(@This());
+test {
+    @setEvalBranchQuota(10_000);
+    inline for (comptime std.meta.declarations(@This())) |decl| {
+        if (!comptime std.mem.eql(u8, decl.name, "c")) {
+            if (decl.is_pub) {
+                if (@TypeOf(@field(@This(), decl.name)) == type) {
+                    switch (@typeInfo(@field(@This(), decl.name))) {
+                        .Struct, .Enum, .Union, .Opaque => std.testing.refAllDeclsRecursive(@field(@This(), decl.name)),
+                        else => {},
+                    }
+                }
+                _ = @field(@This(), decl.name);
+            }
+        }
+    }
 }

@@ -221,6 +221,8 @@ pub const KeyboardKey = enum(i32) {
     /// Key: Keypad =
     kp_equal = 336,
 
+    _,
+
     // Android key buttons
     /// Key: Android back button
     pub const back = @intToEnum(KeyboardKey, 4);

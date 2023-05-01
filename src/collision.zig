@@ -33,20 +33,20 @@ pub fn checkPointTriangle(point: Vector2, p1: Vector2, p2: Vector2, p3: Vector2)
 }
 
 /// Check if point is within a polygon described by slice of vertices
-pub fn checkPointPoly(point: Vector2, points: []Vector2) bool {
+pub fn checkPointPoly(point: Vector2, points: []lib.c.Vector2) bool {
     return lib.c.CheckCollisionPointPoly(point.toCStruct(), points.ptr, @intCast(c_int, points.len));
 }
 
 /// Check the collision between two lines defined by two points each, returns collision point by reference
 pub fn checkLines(start_pos1: Vector2, end_pos1: Vector2, start_pos2: Vector2, end_pos2: Vector2) ?Vector2 {
-    var collision_point: Vector2 = undefined;
+    var collision_point: lib.c.Vector2 = undefined;
     return if (lib.c.CheckCollisionLines(
         start_pos1.toCStruct(),
         end_pos1.toCStruct(),
         start_pos2.toCStruct(),
         end_pos2.toCStruct(),
-        &collision_point.toCStruct(),
-    )) collision_point else null;
+        &collision_point,
+    )) Vector2.fromCStruct(collision_point) else null;
 }
 
 /// Check if point belongs to line created between two points [p1] and [p2] with defined margin in pixels [threshold]
