@@ -109,3 +109,10 @@ pub fn maximize() void {
 pub fn restore() void {
     lib.c.RestoreWindow();
 }
+
+/// Set window minimum dimensions (for FLAG_WINDOW_RESIZABLE)
+///
+/// Wrapper around `SetWindowMinSize` from the c api
+pub fn setMinimumSize(width: u16, height: u16) void {
+    lib.c.SetWindowMinSize(width, height);
+}

@@ -72,3 +72,9 @@ pub fn length(self: Self) f32 {
 pub fn worldToScreen(self: Self, camera: Camera3D) Vector2 {
     return Vector2.fromCStruct(lib.c.GetWorldToScreen(self.toCStruct(), camera.toCStruct()));
 }
+
+/// Clamp the components of the vector between
+/// min and max values specified by the given vectors
+pub fn clamp(self: Self, min: Self, max: Self) Self {
+    return fromCStruct(lib.c.Vector3Clamp(self.toCStruct(), min.toCStruct(), max.toCStruct()));
+}

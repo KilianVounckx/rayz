@@ -73,3 +73,9 @@ pub fn screenToWorld(self: Self, camera: Camera2D) Self {
 pub fn worldToScreen(self: Self, camera: Camera2D) Self {
     return fromCStruct(lib.c.GetWorldToScreen2D(self.toCStruct(), camera));
 }
+
+/// Clamp the components of the vector between
+/// min and max values specified by the given vectors
+pub fn clamp(self: Self, min: Self, max: Self) Self {
+    return fromCStruct(lib.c.Vector2Clamp(self.toCStruct(), min.toCStruct(), max.toCStruct()));
+}

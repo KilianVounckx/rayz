@@ -7,6 +7,8 @@ const Vector3 = lib.Vector3;
 const Font = lib.c.Font;
 const Ray = lib.Ray;
 const Rectangle = lib.Rectangle;
+const RenderTexture = lib.RenderTexture;
+const Texture = lib.Texture;
 
 /// Setup canvas (framebuffer) to start drawing
 pub fn begin() void {
@@ -40,6 +42,16 @@ pub fn beginMode3D(camera: Camera3D) void {
 /// Ends 3D mode and returns to default 2D orthographic mode
 pub fn endMode3D() void {
     lib.c.EndMode3D();
+}
+
+/// Begin drawing to render texture
+pub fn beginTextureMode(target: RenderTexture) void {
+    lib.c.BeginTextureMode(target.toCStruct());
+}
+
+/// Ends drawing to render texture
+pub fn endTextureMode() void {
+    lib.c.EndTextureMode();
 }
 
 /// Configuration for `text`
@@ -229,4 +241,55 @@ pub fn plane(center_position: Vector3, size: Vector2, color: Color) void {
 /// Wrapper around `DrawRay` from the c api
 pub fn ray(_ray: Ray, color: Color) void {
     lib.c.DrawRay(_ray.toCStruct(), color.toCStruct());
+}
+
+/// Configuration for `texture`
+pub const DrawTextureConfig = struct {
+    /// Size of the texture to draw
+    ///
+    /// Corresponds to the destination rectangle width and height in the c api's DrawTexturePro
+    size: ?Vector2 = null,
+    /// Part of the texture to be drawn
+    source: ?Rectangle = null,
+    /// Texture rotation
+    rotation: f32 = 0,
+    /// Texture scaling
+    scale: f32 = 1,
+    /// Origin
+    /// Note: relative to size
+    origin: Vector2 = .{ .x = 0, .y = 0 },
+};
+
+/// Draw texture
+///
+/// This function combines `DrawTexture`, `DrawTextureV`, `DrawTextureEx`, `DrawTextureRec`, and
+/// `DrawTexturePro` from the c api
+pub fn texture(_texture: Texture, position: Vector2, color: Color, config: DrawTextureConfig) void {
+    const source = if (config.source) |source|
+        source
+    else
+        Rectangle{
+            .x = 0,
+            .y = 0,
+            .width = @intToFloat(f32, _texture.width),
+            .height = @intToFloat(f32, _texture.height),
+        };
+    const size = if (config.size) |size|
+        size
+    else
+        Vector2{
+            .x = @intToFloat(f32, _texture.width) * config.scale,
+            .y = @intToFloat(f32, _texture.height) * config.scale,
+        };
+
+    const dest = Rectangle{ .x = position.x, .y = position.y, .width = size.x, .height = size.y };
+
+    lib.c.DrawTexturePro(
+        _texture.toCStruct(),
+        source,
+        dest,
+        config.origin.toCStruct(),
+        config.rotation,
+        color.toCStruct(),
+    );
 }
