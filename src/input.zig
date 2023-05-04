@@ -4,7 +4,7 @@ const lib = @import("lib.zig");
 const Vector2 = lib.Vector2;
 
 /// Keyboard keys (US keyboard layout)
-pub const KeyboardKey = enum(i32) {
+pub const KeyboardKey = enum(u16) {
     /// Key: NULL, used for no key pressed
     null = 0,
     // Alphanumeric keys
