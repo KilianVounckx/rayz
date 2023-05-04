@@ -6,7 +6,7 @@ const Vector2 = lib.Vector2;
 /// Keyboard keys (US keyboard layout)
 pub const KeyboardKey = enum(i32) {
     /// Key: NULL, used for no key pressed
-    none = 0,
+    null = 0,
     // Alphanumeric keys
     /// Key: '
     apostrophe = 39,
@@ -233,6 +233,11 @@ pub const KeyboardKey = enum(i32) {
     /// Key: Android volume down button
     pub const volume_down = @intToEnum(KeyboardKey, 25);
 };
+
+// Set a custom key to exit program (default is ESC)
+pub fn setExitKey(key: KeyboardKey) void {
+    lib.c.SetExitKey(@enumToInt(key));
+}
 
 /// Check if a key is being pressed
 pub fn isKeyDown(key: KeyboardKey) bool {
