@@ -231,7 +231,7 @@ pub const KeyboardKey = enum(u16) {
     /// Key: Android volume up button
     pub const volume_up = @intToEnum(KeyboardKey, lib.c.KEY_VOLUME_UP);
     /// Key: Android volume down button
-    pub const volume_down = @intToEnum(KeyboardKey, lib.c.KEY_VOLUMN_DOWN);
+    pub const volume_down = @intToEnum(KeyboardKey, lib.c.KEY_VOLUME_DOWN);
 };
 
 // Set a custom key to exit program (default is ESC)
