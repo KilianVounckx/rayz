@@ -6,232 +6,232 @@ const Vector2 = lib.Vector2;
 /// Keyboard keys (US keyboard layout)
 pub const KeyboardKey = enum(u16) {
     /// Key: NULL, used for no key pressed
-    null = 0,
+    null = lib.c.KEY_NULL,
     // Alphanumeric keys
     /// Key: '
-    apostrophe = 39,
+    apostrophe = lib.c.KEY_APOSTROPHE,
     /// Key: ,
-    comma = 44,
+    comma = lib.c.KEY_COMMA,
     /// Key: -
-    minus = 45,
+    minus = lib.c.KEY_MINUS,
     /// Key: .
-    period = 46,
+    period = lib.c.KEY_PERIOD,
     /// Key: /
-    slash = 47,
+    slash = lib.c.KEY_SLASH,
     /// Key: 0
-    zero = 48,
+    zero = lib.c.KEY_ZERO,
     /// Key: 1
-    one = 49,
+    one = lib.c.KEY_ONE,
     /// Key: 2
-    two = 50,
+    two = lib.c.KEY_TWO,
     /// Key: 3
-    three = 51,
+    three = lib.c.KEY_THREE,
     /// Key: 4
-    four = 52,
+    four = lib.c.KEY_FOUR,
     /// Key: 5
-    five = 53,
+    five = lib.c.KEY_FIVE,
     /// Key: 6
-    six = 54,
+    six = lib.c.KEY_SIX,
     /// Key: 7
-    seven = 55,
+    seven = lib.c.KEY_SEVEN,
     /// Key: 8
-    eight = 56,
+    eight = lib.c.KEY_EIGHT,
     /// Key: 9
-    nine = 57,
+    nine = lib.c.KEY_NINE,
     /// Key: ;
-    semicolon = 59,
+    semicolon = lib.c.KEY_SEMICOLON,
     /// Key: =
-    equal = 61,
+    equal = lib.c.KEY_EQUAL,
     /// Key: A | a
-    a = 65,
+    a = lib.c.KEY_A,
     /// Key: B | b
-    b = 66,
+    b = lib.c.KEY_B,
     /// Key: C | c
-    c = 67,
+    c = lib.c.KEY_C,
     /// Key: D | d
-    d = 68,
+    d = lib.c.KEY_D,
     /// Key: E | e
-    e = 69,
+    e = lib.c.KEY_E,
     /// Key: F | f
-    f = 70,
+    f = lib.c.KEY_F,
     /// Key: G | g
-    g = 71,
+    g = lib.c.KEY_G,
     /// Key: H | h
-    h = 72,
+    h = lib.c.KEY_H,
     /// Key: I | i
-    i = 73,
+    i = lib.c.KEY_I,
     /// Key: J | j
-    j = 74,
+    j = lib.c.KEY_J,
     /// Key: K | k
-    k = 75,
+    k = lib.c.KEY_K,
     /// Key: L | l
-    l = 76,
+    l = lib.c.KEY_L,
     /// Key: M | m
-    m = 77,
+    m = lib.c.KEY_M,
     /// Key: N | n
-    n = 78,
+    n = lib.c.KEY_N,
     /// Key: O | o
-    o = 79,
+    o = lib.c.KEY_O,
     /// Key: P | p
-    p = 80,
+    p = lib.c.KEY_P,
     /// Key: Q | q
-    q = 81,
+    q = lib.c.KEY_Q,
     /// Key: R | r
-    r = 82,
+    r = lib.c.KEY_R,
     /// Key: S | s
-    s = 83,
+    s = lib.c.KEY_S,
     /// Key: T | t
-    t = 84,
+    t = lib.c.KEY_T,
     /// Key: U | u
-    u = 85,
+    u = lib.c.KEY_U,
     /// Key: V | v
-    v = 86,
+    v = lib.c.KEY_V,
     /// Key: W | w
-    w = 87,
+    w = lib.c.KEY_W,
     /// Key: X | x
-    x = 88,
+    x = lib.c.KEY_X,
     /// Key: Y | y
-    y = 89,
+    y = lib.c.KEY_Y,
     /// Key: Z | z
-    z = 90,
+    z = lib.c.KEY_Z,
     /// Key: [
-    left_bracket = 91,
+    left_bracket = lib.c.KEY_LEFT_BRACKET,
     /// Key: '\'
-    backslash = 92,
+    backslash = lib.c.KEY_BACKSLASH,
     /// Key: ]
-    right_bracket = 93,
+    right_bracket = lib.c.KEY_RIGHT_BRACKET,
     /// Key: `
-    grave = 96,
+    grave = lib.c.KEY_GRAVE,
     // Function keys
     /// Key: Space
-    space = 32,
+    space = lib.c.KEY_SPACE,
     /// Key: Esc
-    escape = 256,
+    escape = lib.c.KEY_ESCAPE,
     /// Key: Enter
-    enter = 257,
+    enter = lib.c.KEY_ENTER,
     /// Key: Tab
-    tab = 258,
+    tab = lib.c.KEY_TAB,
     /// Key: Backspace
-    backspace = 259,
+    backspace = lib.c.KEY_BACKSPACE,
     /// Key: Ins
-    insert = 260,
+    insert = lib.c.KEY_INSERT,
     /// Key: Del
-    delete = 261,
+    delete = lib.c.KEY_DELETE,
     /// Key: Cursor right
-    right = 262,
+    right = lib.c.KEY_RIGHT,
     /// Key: Cursor left
-    left = 263,
+    left = lib.c.KEY_LEFT,
     /// Key: Cursor down
-    down = 264,
+    down = lib.c.KEY_DOWN,
     /// Key: Cursor up
-    up = 265,
+    up = lib.c.KEY_UP,
     /// Key: Page up
-    page_up = 266,
+    page_up = lib.c.KEY_PAGE_UP,
     /// Key: Page down
-    page_down = 267,
+    page_down = lib.c.KEY_PAGE_DOWN,
     /// Key: Home
-    home = 268,
+    home = lib.c.KEY_HOME,
     /// Key: End
-    end = 269,
+    end = lib.c.KEY_END,
     /// Key: Caps lock
-    caps_lock = 280,
+    caps_lock = lib.c.KEY_CAPS_LOCK,
     /// Key: Scroll down
-    scroll_lock = 281,
+    scroll_lock = lib.c.KEY_SCROLL_LOCK,
     /// Key: Num lock
-    num_lock = 282,
+    num_lock = lib.c.KEY_NUM_LOCK,
     /// Key: Print screen
-    print_screen = 283,
+    print_screen = lib.c.KEY_PRINT_SCREEN,
     /// Key: Pause
-    pause = 284,
+    pause = lib.c.KEY_PAUSE,
     /// Key: F1
-    f1 = 290,
+    f1 = lib.c.KEY_F1,
     /// Key: F2
-    f2 = 291,
+    f2 = lib.c.KEY_F2,
     /// Key: F3
-    f3 = 292,
+    f3 = lib.c.KEY_F3,
     /// Key: F4
-    f4 = 293,
+    f4 = lib.c.KEY_F4,
     /// Key: F5
-    f5 = 294,
+    f5 = lib.c.KEY_F5,
     /// Key: F6
-    f6 = 295,
+    f6 = lib.c.KEY_F6,
     /// Key: F7
-    f7 = 296,
+    f7 = lib.c.KEY_F7,
     /// Key: F8
-    f8 = 297,
+    f8 = lib.c.KEY_F8,
     /// Key: F9
-    f9 = 298,
+    f9 = lib.c.KEY_F9,
     /// Key: F10
-    f10 = 299,
+    f10 = lib.c.KEY_F10,
     /// Key: F11
-    f11 = 300,
+    f11 = lib.c.KEY_F11,
     /// Key: F12
-    f12 = 301,
+    f12 = lib.c.KEY_F12,
     /// Key: Shift left
-    left_shift = 340,
+    left_shift = lib.c.KEY_LEFT_SHIFT,
     /// Key: Control left
-    left_control = 341,
+    left_control = lib.c.KEY_LEFT_CONTROL,
     /// Key: Alt left
-    left_alt = 342,
+    left_alt = lib.c.KEY_LEFT_ALT,
     /// Key: Super left
-    left_super = 343,
+    left_super = lib.c.KEY_LEFT_SUPER,
     /// Key: Shift right
-    right_shift = 344,
+    right_shift = lib.c.KEY_RIGHT_SHIFT,
     /// Key: Control right
-    right_control = 345,
+    right_control = lib.c.KEY_RIGHT_CONTROL,
     /// Key: Alt right
-    right_alt = 346,
+    right_alt = lib.c.KEY_RIGHT_ALT,
     /// Key: Super right
-    right_super = 347,
+    right_super = lib.c.KEY_RIGHT_SUPER,
     /// Key: KB menu
-    kb_menu = 348,
+    kb_menu = lib.c.KEY_KB_MENU,
     // Keypad keys
     /// Key: Keypad 0
-    kp_0 = 320,
+    kp_0 = lib.c.KEY_KP_0,
     /// Key: Keypad 1
-    kp_1 = 321,
+    kp_1 = lib.c.KEY_KP_1,
     /// Key: Keypad 2
-    kp_2 = 322,
+    kp_2 = lib.c.KEY_KP_2,
     /// Key: Keypad 3
-    kp_3 = 323,
+    kp_3 = lib.c.KEY_KP_3,
     /// Key: Keypad 4
-    kp_4 = 324,
+    kp_4 = lib.c.KEY_KP_4,
     /// Key: Keypad 5
-    kp_5 = 325,
+    kp_5 = lib.c.KEY_KP_5,
     /// Key: Keypad 6
-    kp_6 = 326,
+    kp_6 = lib.c.KEY_KP_6,
     /// Key: Keypad 7
-    kp_7 = 327,
+    kp_7 = lib.c.KEY_KP_7,
     /// Key: Keypad 8
-    kp_8 = 328,
+    kp_8 = lib.c.KEY_KP_8,
     /// Key: Keypad 9
-    kp_9 = 329,
+    kp_9 = lib.c.KEY_KP_9,
     /// Key: Keypad .
-    kp_decimal = 330,
+    kp_decimal = lib.c.KEY_KP_DECIMAL,
     /// Key: Keypad /
-    kp_divide = 331,
+    kp_divide = lib.c.KEY_KP_DIVIDE,
     /// Key: Keypad *
-    kp_multiply = 332,
+    kp_multiply = lib.c.KEY_KP_MULTIPLY,
     /// Key: Keypad -
-    kp_subtract = 333,
+    kp_subtract = lib.c.KEY_KP_SUBTRACT,
     /// Key: Keypad +
-    kp_add = 334,
+    kp_add = lib.c.KEY_KP_ADD,
     /// Key: Keypad Enter
-    kp_enter = 335,
+    kp_enter = lib.c.KEY_KP_ENTER,
     /// Key: Keypad =
-    kp_equal = 336,
+    kp_equal = lib.c.KEY_KP_EQUAL,
 
     _,
 
     // Android key buttons
     /// Key: Android back button
-    pub const back = @intToEnum(KeyboardKey, 4);
+    pub const back = @intToEnum(KeyboardKey, lib.c.KEY_BACK);
     /// Key: Android menu button
-    pub const menu = @intToEnum(KeyboardKey, 82);
+    pub const menu = @intToEnum(KeyboardKey, lib.c.KEY_MENU);
     /// Key: Android volume up button
-    pub const volume_up = @intToEnum(KeyboardKey, 24);
+    pub const volume_up = @intToEnum(KeyboardKey, lib.c.KEY_VOLUME_UP);
     /// Key: Android volume down button
-    pub const volume_down = @intToEnum(KeyboardKey, 25);
+    pub const volume_down = @intToEnum(KeyboardKey, lib.c.KEY_VOLUMN_DOWN);
 };
 
 // Set a custom key to exit program (default is ESC)
@@ -262,19 +262,19 @@ pub fn isKeyUp(key: KeyboardKey) bool {
 /// Mouse buttons
 pub const MouseButton = enum(i32) {
     /// Mouse button left
-    left = 0,
+    left = lib.c.MOUSE_BUTTON_LEFT,
     /// Mouse button right
-    right = 1,
+    right = lib.c.MOUSE_BUTTON_RIGHT,
     /// Mouse button middle (pressed wheel)
-    middle = 2,
+    middle = lib.c.MOUSE_BUTTON_MIDDLE,
     /// Mouse button side (advanced mouse device)
-    side = 3,
+    side = lib.c.MOUSE_BUTTON_SIDE,
     /// Mouse button extra (advanced mouse device)
-    extra = 4,
+    extra = lib.c.MOUSE_BUTTON_EXTRA,
     /// Mouse button forward (advanced mouse device)
-    forward = 5,
+    forward = lib.c.MOUSE_BUTTON_FORWARD,
     /// Mouse button back (advanced mouse device)
-    back = 6,
+    back = lib.c.MOUSE_BUTTON_BACK,
 };
 
 /// Get mouse position XY
@@ -342,27 +342,27 @@ pub const GestureFlags = blk: {
 /// Gesture
 pub const Gesture = enum(u16) {
     /// No gesture
-    none = 0,
+    none = lib.c.GESTURE_NONE,
     /// Tap gesture
-    tap = 1,
+    tap = lib.c.GESTURE_TAP,
     /// Double tap gesture
-    doubletap = 2,
+    doubletap = lib.c.GESTURE_DOUBLETAP,
     /// Hold gesture
-    hold = 4,
+    hold = lib.c.GESTURE_HOLD,
     /// Drag gesture
-    drag = 8,
+    drag = lib.c.GESTURE_DRAG,
     /// Swipe right gesture
-    swipe_right = 16,
+    swipe_right = lib.c.GESTURE_SWIPE_RIGHT,
     /// Swipe left gesture
-    swipe_left = 32,
+    swipe_left = lib.c.GESTURE_SWIPE_LEFT,
     /// Swipe up gesture
-    swipe_up = 64,
+    swipe_up = lib.c.GESTURE_SWIPE_UP,
     /// Swipe down gesture
-    swipe_down = 128,
+    swipe_down = lib.c.GESTURE_SWIPE_DOWN,
     /// Pinch in gesture
-    pinch_in = 256,
+    pinch_in = lib.c.GESTURE_PINCH_IN,
     /// Pinch out gesture
-    pinch_out = 512,
+    pinch_out = lib.c.GESTURE_PINCH_OUT,
 };
 
 /// Enable a set of gestures using flags
