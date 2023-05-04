@@ -21,7 +21,7 @@ your project's root.
 
 In your build.zig add the following:
 ```zig
-const raylib = @import("libs/raylib/build.zig");
+const raylib = @import("libs/rayz/build.zig");
 
 pub fn build(b: *std.Build) void {
     const exe = b.addExecutable(.{
