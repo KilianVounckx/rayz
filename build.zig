@@ -26,6 +26,7 @@ pub fn build(b: *std.Build) !void {
         .optimize = optimize,
     });
     lib.addIncludePath("libs/raylib/src");
+    lib.addIncludePath("include");
     lib.linkLibrary(raylib.addRaylib(b, target, optimize));
 
     // This declares intent for the library to be installed into the standard
@@ -41,6 +42,7 @@ pub fn build(b: *std.Build) !void {
         .optimize = optimize,
     });
     main_tests.addIncludePath("libs/raylib/src");
+    main_tests.addIncludePath("include");
     main_tests.linkLibrary(raylib.addRaylib(b, target, optimize));
 
     const run_main_tests = b.addRunArtifact(main_tests);
@@ -125,5 +127,6 @@ pub fn build(b: *std.Build) !void {
 pub fn link(name: []const u8, b: *std.Build, step: *std.build.CompileStep) void {
     step.addModule(name, b.createModule(.{ .source_file = .{ .path = "src/lib.zig" } }));
     step.addIncludePath("libs/raylib/src");
+    step.addIncludePath("include");
     step.linkLibrary(raylib.addRaylib(b, step.target, step.optimize));
 }

@@ -8,6 +8,8 @@ pub usingnamespace @cImport({
     @cDefine("RL_REALLOC", "zig_realloc");
     @cDefine("RL_FREE", "zig_free");
 
+    @cInclude("rayz.h");
+
     @cInclude("raylib.h");
     @cInclude("raymath.h");
     @cInclude("rcamera.h");
