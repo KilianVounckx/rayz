@@ -1,9 +1,11 @@
 const std = @import("std");
+const Allocator = std.mem.Allocator;
 
 pub const BoundingBox = c.BoundingBox;
 pub const Camera2D = c.Camera2D;
 pub const Camera3D = @import("Camera3D.zig");
 pub const Color = @import("Color.zig");
+const FilePathList = c.FilePathList;
 pub const Ray = @import("Ray.zig");
 pub const Rectangle = c.Rectangle;
 pub const RenderTexture = @import("RenderTexture.zig");
@@ -16,6 +18,15 @@ pub const draw = @import("draw.zig");
 pub const input = @import("input.zig");
 pub const matrix = @import("matrix.zig");
 pub const window = @import("window.zig");
+
+/// Set the allocator to be used by raylib
+///
+/// Returns the allocator which was used previously
+pub fn setAllocator(allocator: Allocator) Allocator {
+    const old_allocator = c.rl_allocator;
+    c.rl_allocator = allocator;
+    return old_allocator;
+}
 
 /// Set target FPS (maximum)
 pub fn setTargetFps(fps: i32) void {
@@ -50,6 +61,27 @@ pub fn getScreenSize() Vector2 {
         .x = @intToFloat(f32, c.GetScreenWidth()),
         .y = @intToFloat(f32, c.GetScreenHeight()),
     };
+}
+
+/// Check if a file has been dropped into window
+///
+/// Wrapper around `IsFileDropped` from the c api
+pub fn isFileDropped() bool {
+    return c.IsFileDropped();
+}
+
+/// Load dropped filepaths
+///
+/// Wrapper around `LoadDroppedFiles` from the c api
+pub fn loadDroppedFiles() FilePathList {
+    return c.LoadDroppedFiles();
+}
+
+/// Unload dropped filepaths
+///
+/// Wrapper around `UnloadDroppedFiles` from the c api
+pub fn unloadDroppedFiles(files: FilePathList) void {
+    return c.UnloadDroppedFiles(files);
 }
 
 test {
